@@ -13,9 +13,9 @@ const App = () => {
     if(WebApp.initDataUnsafe.user) {
       setUserData(WebApp.initDataUnsafe.user as UserData)
       const webApp = WebApp
-      webApp.isExpanded = true
-      webApp.headerColor = "#000"
-      webApp.backgroundColor = "#271732"
+      webApp.expand()
+      webApp.setHeaderColor("#000")
+      webApp.setBackgroundColor("#271732")
     }
   }, []);
   
