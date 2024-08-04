@@ -16,8 +16,10 @@ const App = () => {
   }, []);
   
   const [points, setPoints] = useState(0);
+  // @ts-ignore
   const [pointsPerClick, setPointsPerClick] = useState(12)
   const [energy, setEnergy] = useState(2532);
+  // @ts-ignore
   const [maxEnergy, setMaxEnergy] = useState(1000);
   const [isPressed, setIsPressed] = useState(false);
   const [clicks, setClicks] = useState<{ id: number, x: number, y: number }[]>([]);
