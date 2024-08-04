@@ -5,6 +5,7 @@ import Energy from "./ui/main/Energy.tsx";
 import BottomNav from "./ui/main/BottomNav.tsx";
 import WebApp from "@twa-dev/sdk"
 import {UserData} from "./utils/types.ts";
+import {getUserDataFromBot} from "./api/subs/subs.ts";
 
 const App = () => {
   const [userData, setUserData] = useState<UserData | null>(null)
@@ -12,12 +13,18 @@ const App = () => {
   useEffect(() => {
     if(WebApp.initDataUnsafe.user) {
       setUserData(WebApp.initDataUnsafe.user as UserData)
+
+
       const webApp = WebApp
       webApp.expand()
       webApp.setHeaderColor("#000")
       webApp.setBackgroundColor("#271732")
     }
   }, []);
+
+  if(userData) {
+    getUserDataFromBot(userData.id).then((sub) => setPoints(sub.tokens))
+  }
   
   const [points, setPoints] = useState(0);
   // @ts-ignore
