@@ -4,6 +4,9 @@ import highVoltage from "./high-voltage.png";
 import notcoin from "./notcoin.png";
 import rocket from "./rocket.png";
 import trophy from "./trophy.png";
+import robot from './robot.png'
+import cuteRobot from './сute_robot.png'
+import colorfulRobot from './colorful_robot.png'
 
 export {
     bear,
@@ -11,5 +14,8 @@ export {
     highVoltage,
     notcoin,
     rocket,
-    trophy
+    trophy,
+    robot,
+    cuteRobot,
+    colorfulRobot
 }
