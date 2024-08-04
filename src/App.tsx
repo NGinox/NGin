@@ -12,6 +12,9 @@ const App = () => {
   useEffect(() => {
     if(WebApp.initDataUnsafe.user) {
       setUserData(WebApp.initDataUnsafe.user as UserData)
+      WebApp.isExpanded = true
+      WebApp.headerColor = "#000"
+      WebApp.backgroundColor = "#271732"
     }
   }, []);
   
