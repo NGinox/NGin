@@ -12,6 +12,7 @@ const App = () => {
 
   useEffect(() => {
     if(WebApp.initDataUnsafe.user) {
+      console.log(WebApp.initDataUnsafe.user)
       setUserData(WebApp.initDataUnsafe.user as UserData)
       getUserDataFromBot(WebApp.initDataUnsafe.user.id).then((sub) => setPoints(sub.tokens))
 
