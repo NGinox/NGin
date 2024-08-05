@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 
 const URL = import.meta.env.VITE_REACT_API_URL + "/api/subs/"
-const URLTEST = "http://localhost:3000" + "/api/subs/"
+//const URLTEST = "http://localhost:3000" + "/api/subs/"
 export const getUserDataFromBot = async (userId: number): Promise<Subscriber> => {
     try {
         const response: AxiosResponse<Subscriber> = await axios.post(URL + "one", {user_id: userId})
