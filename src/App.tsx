@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import './index.css';
 import { colorfulRobot } from './images';
 import Energy from "./ui/main/Energy.tsx";
 import BottomNav from "./ui/main/BottomNav.tsx";
 import WebApp from "@twa-dev/sdk"
 import {UserData} from "./utils/types.ts";
-import {getUserDataFromBot} from "./api/subs/subs.ts";
+import {getUserDataFromBot, updateSubscriberTokens} from "./api/subs/subs.ts";
 
 const App = () => {
   const [userData, setUserData] = useState<UserData | null>(null)
-
+  const fakeUserData: UserData = {
+    first_name: "Andrei Dev",
+    id: 499053331,
+    language_code: "en",
+    last_name: "",
+  }
   useEffect(() => {
     if(WebApp.initDataUnsafe.user) {
       console.log(WebApp.initDataUnsafe.user)
@@ -20,10 +25,18 @@ const App = () => {
       webApp.expand()
       webApp.setHeaderColor("#000")
       webApp.setBackgroundColor("#271732")
+    } else {
+      setUserData(fakeUserData)
+      getUserDataFromBot(fakeUserData.id).then((sub) => setPoints(sub.tokens))
     }
+
+
   }, []);
   
   const [points, setPoints] = useState(0);
+  const timerRef = useRef<number | null>(null); // Use number instead of NodeJS.Timeout
+  const delay = 1000; // 1 second delay
+
   // @ts-ignore
   const [pointsPerClick, setPointsPerClick] = useState(12)
   const [energy, setEnergy] = useState(2532);
@@ -42,7 +55,12 @@ const App = () => {
     }
   }, [isPressed]);
 
+
+
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (timerRef.current !== null) {
+      clearTimeout(timerRef.current);
+    }
     if (energy - energyToReduce < 0) {
       return;
     }
@@ -54,6 +72,13 @@ const App = () => {
     setPoints(points + pointsToAdd);
     setEnergy(energy - energyToReduce < 0 ? 0 : energy - energyToReduce);
     setClicks([...clicks, { id: Date.now(), x, y }]);
+
+    timerRef.current = window.setTimeout(() => {
+      if(userData) {
+        updateSubscriberTokens(userData.id, points);
+      }
+      // Reset clicks after sending
+    }, delay);
   };
 
   const handleAnimationEnd = (id: number) => {
