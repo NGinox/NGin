@@ -58,9 +58,6 @@ const App = () => {
 
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (timerRef.current !== null) {
-      clearTimeout(timerRef.current);
-    }
     if (energy - energyToReduce < 0) {
       return;
     }
@@ -72,14 +69,19 @@ const App = () => {
     setPoints(points + pointsToAdd);
     setEnergy(energy - energyToReduce < 0 ? 0 : energy - energyToReduce);
     setClicks([...clicks, { id: Date.now(), x, y }]);
+  };
+
+  useEffect(() => {
+    if (timerRef.current !== null) {
+      clearTimeout(timerRef.current);
+    }
 
     timerRef.current = window.setTimeout(() => {
       if(userData) {
         updateSubscriberTokens(userData.id, points);
       }
-      // Reset clicks after sending
     }, delay);
-  };
+  }, [points]);
 
   const handleAnimationEnd = (id: number) => {
     setClicks((prevClicks) => prevClicks.filter(click => click.id !== id));
