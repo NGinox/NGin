@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     if(WebApp.initDataUnsafe.user) {
       setUserData(WebApp.initDataUnsafe.user as UserData)
-
+      getUserDataFromBot(WebApp.initDataUnsafe.user.id).then((sub) => setPoints(sub.tokens))
 
       const webApp = WebApp
       webApp.expand()
@@ -21,10 +21,6 @@ const App = () => {
       webApp.setBackgroundColor("#271732")
     }
   }, []);
-
-  if(userData) {
-    getUserDataFromBot(userData.id).then((sub) => setPoints(sub.tokens))
-  }
   
   const [points, setPoints] = useState(0);
   // @ts-ignore
