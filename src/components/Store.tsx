@@ -1,4 +1,3 @@
-import {useClickerContext} from "../utils/LocalContextProvider.tsx";
 import useAppStore from "../hooks/useAppStore.ts";
 
 const Store = () => {
