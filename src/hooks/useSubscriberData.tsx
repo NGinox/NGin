@@ -20,6 +20,7 @@ const useSubscriberData = () => {
             WebApp.expand();
             WebApp.setHeaderColor("#000");
             WebApp.setBackgroundColor("#271732");
+            WebApp.disableVerticalSwipes()
         } else {
             // For local testing
             setSubscriberId(import.meta.env.VITE_REACT_DEFAULT_USER_ID);
