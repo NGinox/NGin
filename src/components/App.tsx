@@ -57,7 +57,7 @@ const App = () => {
     }
 
     return (
-        <div className="min-h-screen p-4 bg-gradient-to-b from-[#000] to-[#271732] flex flex-col items-center text-white font-medium">
+        <div className="min-h-screen p-4 bg-gradient-to-b from-[#000] to-[#271732] flex flex-col items-center text-white font-futura">
             <div id="clicker" className="flex-grow flex flex-col w-full">
                 <Outlet/>
             </div>
