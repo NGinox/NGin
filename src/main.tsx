@@ -4,9 +4,10 @@ import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import App from "./components/App.tsx";
 import ClickerProvider from "./utils/LocalContextProvider.tsx";
-import Store from "./components/Store.tsx";
+import ComingSoon from "./components/ComingSoon.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import Clicker from "./components/clicker/Clicker.tsx";
+import Store from "./components/store/Store.tsx";
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "coming-soon",
-                element: <Store/>,
+                element: <ComingSoon/>,
             },
         ],
     },

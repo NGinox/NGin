@@ -7,6 +7,7 @@ import trophy from "./trophy.png";
 import robot from './robot.png'
 import cuteRobot from './сute_robot.png'
 import colorfulRobot from './colorful_robot.png'
+import telegramStar from './telegram-star.png'
 
 export {
     bear,
@@ -17,5 +18,6 @@ export {
     trophy,
     robot,
     cuteRobot,
-    colorfulRobot
+    colorfulRobot,
+    telegramStar
 }

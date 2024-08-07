@@ -1,6 +1,4 @@
-
-const Store = () => {
-
+const ComingSoon = () => {
     return (
         <div className="grow flex items-center justify-center text-xl">
             Coming soon
@@ -8,4 +6,4 @@ const Store = () => {
     );
 };
 
-export default Store;
+export default ComingSoon;

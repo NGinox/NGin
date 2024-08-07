@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {MAX_ENERGY} from "../constants/constants.ts";
+import {ENERGY_TO_INCREASE, MAX_ENERGY} from "../constants/constants.ts";
 
 const useAppStore = create<AppState & Action>()((set) => ({
     tokens: 0,

@@ -10,6 +10,13 @@ body {
 @font-face {
   font-family: "Futura";
   src: url("./assets/fonts/FuturaMedium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Futura-Regular";
+  src: url("./assets/fonts/FuturaRegular.ttf");
+  font-weight: 400;
 }
 
 @keyframes float {
