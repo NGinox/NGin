@@ -51,7 +51,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
         <div className="h-full w-full z-10 flex flex-col items-center text-white flex-grow">
 
             {/* Squads and counter */}
-            <div className="w-full px-4 pt-8 z-10 flex flex-col items-center text-white">
+            <div className="w-full px-4 z-10 flex flex-col items-center text-white">
                 <div className="w-full cursor-pointer">
                     <div className="bg-[#1f1f1f] text-center py-2 rounded-xl">
                         <p className="text-lg opacity-30">Squads coming soon...</p>
