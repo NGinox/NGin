@@ -1,10 +1,10 @@
 import {Outlet} from "react-router-dom";
 import BottomNav from "./BottomNav.tsx";
 import useSubscriberData from "../hooks/useSubscriberData.tsx";
-import {MAX_ENERGY} from "../constants/constants.ts";
+import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE, MAX_ENERGY} from "../constants/constants.ts";
 import useAppStore from "../hooks/useAppStore.ts";
 import {useEffect} from "react";
-import {MutatingDots} from "react-loader-spinner";
+import Loader from "./Loader.tsx";
 
 const App = () => {
 
@@ -23,9 +23,9 @@ const App = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             if(useAppStore.getState().energy < MAX_ENERGY) {
-                useAppStore.getState().increaseEnergy(1)
+                useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
             }
-        }, 1000); // Restore 1 energy point every half second
+        }, DELAY_OF_INCREASING_OF_ENERGY); // Restore 1 energy point every second
 
         return () => {
             clearInterval(interval);
@@ -36,19 +36,7 @@ const App = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#000] to-[#271732]">
-                <MutatingDots
-                    visible={true}
-                    height="100"
-                    width="100"
-                    color="rgba(226,57,105,0.7)"
-                    secondaryColor="rgba(226,57,105,0.7)"
-                    radius="12.5"
-                    ariaLabel="mutating-dots-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                />
-            </div>
+            <Loader/>
         )
     }
 

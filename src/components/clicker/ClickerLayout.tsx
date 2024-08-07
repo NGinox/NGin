@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
-import {colorfulRobot} from "../../images";
-import Energy from "./Energy.tsx";
+import {colorfulRobot, highVoltage} from "../../images";
 import {ENERGY_TO_REDUCE, MAX_ENERGY, TOKENS_PER_CLICK} from "../../constants/constants.ts";
 
 interface ClickerViewProps {
     isPressed: boolean;
     tokens: number;
     energy: number
-    updateStateOnClick: (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => void;
+    updateStateOnClick: (e: React.TouchEvent<HTMLDivElement>) => void;
 }
 const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, updateStateOnClick}) => {
 
@@ -18,26 +17,18 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
         setClicks((prevClicks) => prevClicks.filter(click => click.id !== id));
     };
 
-    const onHandleClick = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    const onHandleClick = (e: React.TouchEvent<HTMLDivElement>) => {
         e.preventDefault();
 
         let x = 0
         let y = 0
 
-        if ('touches' in e) {
-            for (let i = 0; i < e.touches.length; i++) {
-                const touch = e.touches[i];
-                const rect = e.currentTarget.getBoundingClientRect();
-                x = touch.clientX - rect.left;
-                y = touch.clientY - rect.top;
-                console.log(`Touch ${i + 1} at x: ${x}, y: ${y}`);
-            }
-        } else {
-            // Handle mouse event
+        for (let i = 0; i < e.touches.length; i++) {
+            const touch = e.touches[i];
             const rect = e.currentTarget.getBoundingClientRect();
-            x = e.clientX - rect.left;
-            y = e.clientY - rect.top;
-            console.log(`Mouse click at x: ${x}, y: ${y}`);
+            x = touch.clientX - rect.left;
+            y = touch.clientY - rect.top;
+            console.log(`Touch ${i + 1} at x: ${x}, y: ${y}`);
         }
 
         if (energy > ENERGY_TO_REDUCE) {
@@ -51,13 +42,12 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
         <div className="h-full w-full z-10 flex flex-col items-center text-white flex-grow">
 
             {/* Squads and counter */}
-            <div className="w-full px-4 z-10 flex flex-col items-center text-white">
+            <div className="w-full px-4 z-10 flex flex-col items-center">
                 <div className="w-full cursor-pointer">
                     <div className="bg-[#1f1f1f] text-center py-2 rounded-xl">
                         <p className="text-lg opacity-30">Squads coming soon...</p>
                     </div>
                 </div>
-
             </div>
 
             {/*Coin*/}
@@ -94,6 +84,30 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
         </div>
     );
 };
+
+const Energy = ({ energy, maxEnergy}: EnergyProps) => {
+    return (
+        <>
+            <div className="w-full flex flex-row items-center" style={{fontFamily: 'Futura, sans-family'}}>
+                <img src={highVoltage} width={32} height={32} alt="High Voltage"/>
+                <div className="flex flex-row items-center ml-auto">
+                    <div className="text-white text-xl font-bold">{energy} / <span
+                        className="opacity-50 ">{maxEnergy}</span>
+                    </div>
+                </div>
+            </div>
+            <div className="w-full bg-[#18091c] rounded-full mt-2">
+                <div className="bg-gradient-to-r from-[#f3c45a] to-[#fffad0] h-4 rounded-full"
+                     style={{width: `${(energy / maxEnergy) * 100}%`}}></div>
+            </div>
+        </>
+    )
+};
+
+type EnergyProps = {
+    energy: number;
+    maxEnergy: number;
+}
 
 function formatNumberWithSpaces(number: number) {
     const numStr = number.toString();
