@@ -28,7 +28,7 @@ const Clicker = () => {
 
         timerRef.current = window.setTimeout(() => {
             if (subscriber) {
-                SubscriberService.updateSubscriberTokens(subscriber.user_id, tokens);
+                SubscriberService.updateSubscriberTokens(subscriber.user_id, Number(tokens.toFixed(1)));
             }
         }, DELAY_OF_TOKENS_SYNC);
 
