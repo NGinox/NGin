@@ -61,7 +61,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
                 <div className="mt-12 text-5xl font-bold flex items-center">
                     <span className="ml-2" style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(tokens)}</span>
                 </div>
-                <div className="relative flex mt-4 flex-grow items-center" onClick={onHandleClick}>
+                <div className="relative flex mt-4 flex-grow items-center" onClick={onHandleClick} onTouchStart={onHandleClick}>
                     <div
                         style={isPressed ? {transform: 'scale(0.95)'} : {transform: 'scale(1)'}}
                         className="rounded-full border-8 border-[#f3c45a] shadow-[0_0_15px_5px_rgba(252,204,75,1)] transform transition-transform duration-100">
