@@ -52,9 +52,9 @@ const Clicker = () => {
             touchesCount = e.touches.length
         }
 
-        updateTokens(tokens + TOKENS_PER_CLICK * touchesCount)
-        if(energy > 0) {
+        if(energy > ENERGY_TO_REDUCE) {
             decreaseEnergy(ENERGY_TO_REDUCE)
+            updateTokens(tokens + TOKENS_PER_CLICK * touchesCount)
         }
     };
 

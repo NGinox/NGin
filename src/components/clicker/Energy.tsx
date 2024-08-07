@@ -3,11 +3,11 @@ import {highVoltage} from "../../images";
 const Energy = ({ energy, maxEnergy}: EnergyProps) => {
     return (
         <>
-            <div className="w-full flex flex-row items-center">
+            <div className="w-full flex flex-row items-center" style={{fontFamily: 'Futura, sans-family'}}>
                 <img src={highVoltage} width={32} height={32} alt="High Voltage"/>
                 <div className="flex flex-row items-center ml-auto">
                     <div className="text-white text-xl font-bold">{energy} / <span
-                        className="opacity-50">{maxEnergy}</span>
+                        className="opacity-50 ">{maxEnergy}</span>
                     </div>
                 </div>
             </div>
