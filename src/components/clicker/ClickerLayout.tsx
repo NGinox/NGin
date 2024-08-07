@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {colorfulRobot} from "../../images";
 import Energy from "./Energy.tsx";
-import {MAX_ENERGY, TOKENS_PER_CLICK} from "../../constants/constants.ts";
+import {ENERGY_TO_REDUCE, MAX_ENERGY, TOKENS_PER_CLICK} from "../../constants/constants.ts";
 
 interface ClickerViewProps {
     isPressed: boolean;
@@ -39,8 +39,12 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
             y = e.clientY - rect.top;
             console.log(`Mouse click at x: ${x}, y: ${y}`);
         }
-        updateStateOnClick(e)
-        setClicks([...clicks, { id: Date.now(), x, y }]);
+
+        if (energy > ENERGY_TO_REDUCE) {
+            updateStateOnClick(e)
+            setClicks([...clicks, { id: Date.now(), x, y }]);
+        }
+
     }
 
     return (
@@ -61,7 +65,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
                 <div className="mt-12 text-5xl font-bold flex items-center">
                     <span className="ml-2" style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(tokens)}</span>
                 </div>
-                <div className="relative flex mt-4 flex-grow items-center" onClick={onHandleClick} onTouchStart={onHandleClick}>
+                <div className="relative flex mt-4 flex-grow items-center" onTouchStart={onHandleClick}>
                     <div
                         style={isPressed ? {transform: 'scale(0.95)'} : {transform: 'scale(1)'}}
                         className="rounded-full border-8 border-[#f3c45a] shadow-[0_0_15px_5px_rgba(252,204,75,1)] transform transition-transform duration-100">

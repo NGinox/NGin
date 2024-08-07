@@ -15,7 +15,7 @@ const router = createBrowserRouter([
         element: <App/>,
         children: [
             {
-                path: "clicker",
+                index: true,
                 element: <Clicker/>,
             },
             {

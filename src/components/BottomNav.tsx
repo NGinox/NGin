@@ -6,7 +6,7 @@ const BottomNav = () => {
         <div className="flex items-center w-full text-sm">
             <div
                 className="w-full bg-[#271732] py-4 rounded-2xl flex justify-around shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] relative">
-                <NavLink className="flex flex-col items-center gap-1" to={'/clicker'}>
+                <NavLink className="flex flex-col items-center gap-1" to={'/'}>
                     <img src={bear} width={24} height={24} alt="High Voltage"/>
                     <span>Frens</span>
                 </NavLink>
