@@ -47,20 +47,21 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
         <div className="h-full w-full z-10 flex flex-col items-center text-white flex-grow">
 
             {/* Squads and counter */}
-            <div className="fixed top-0 left-0 w-full px-4 pt-8 z-10 flex flex-col items-center text-white">
+            <div className="w-full px-4 pt-8 z-10 flex flex-col items-center text-white">
                 <div className="w-full cursor-pointer">
                     <div className="bg-[#1f1f1f] text-center py-2 rounded-xl">
                         <p className="text-lg opacity-30">Squads coming soon...</p>
                     </div>
                 </div>
-                <div className="mt-12 text-5xl font-bold flex items-center">
-                    <span className="ml-2" style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(tokens)}</span>
-                </div>
+
             </div>
 
             {/*Coin*/}
-            <div className="flex-grow flex items-center justify-center">
-                <div className="relative mt-4" onClick={onHandleClick}>
+            <div className="flex-grow flex flex-col items-center">
+                <div className="mt-12 text-5xl font-bold flex items-center">
+                    <span className="ml-2" style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(tokens)}</span>
+                </div>
+                <div className="relative flex mt-4 flex-grow items-center" onClick={onHandleClick} onTouchStart={onHandleClick}>
                     <div
                         style={isPressed ? {transform: 'scale(0.95)'} : {transform: 'scale(1)'}}
                         className="rounded-full border-8 border-[#f3c45a] shadow-[0_0_15px_5px_rgba(252,204,75,1)] transform transition-transform duration-100">
@@ -83,7 +84,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
             </div>
 
             {/* Energy bar */}
-            <div className="w-full px-4 pb-4 z-10 flex flex-col gap-4">
+            <div className="w-full pb-4 z-10 flex flex-col gap-4">
                 <Energy energy={energy} maxEnergy={MAX_ENERGY}/>
             </div>
         </div>
