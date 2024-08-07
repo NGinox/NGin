@@ -25,7 +25,7 @@ const App = () => {
             if(useAppStore.getState().energy < MAX_ENERGY) {
                 useAppStore.getState().increaseEnergy(1)
             }
-        }, 200); // Restore 1 energy point every half second
+        }, 1000); // Restore 1 energy point every half second
 
         return () => {
             clearInterval(interval);
@@ -41,8 +41,8 @@ const App = () => {
                     visible={true}
                     height="100"
                     width="100"
-                    color="#fff"
-                    secondaryColor="#fff"
+                    color="rgba(226,57,105,0.7)"
+                    secondaryColor="rgba(226,57,105,0.7)"
                     radius="12.5"
                     ariaLabel="mutating-dots-loading"
                     wrapperStyle={{}}
