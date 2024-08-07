@@ -51,7 +51,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
             {/*Coin*/}
             <div className="flex-grow flex flex-col items-center">
                 <div className="mt-12 text-5xl font-bold flex items-center">
-                    <span className="ml-2" style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(Number(tokens.toFixed(1)))}</span>
+                    <span className="ml-2" style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(tokens)}</span>
                 </div>
                 <div className="relative flex mt-4 flex-grow items-center" onTouchStart={onHandleClick}>
                     <div
@@ -77,7 +77,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
 
             {/* Energy bar */}
             <div className="w-full pb-4 z-10 flex flex-col gap-4">
-                <Energy energy={Number(energy.toFixed(1))} maxEnergy={MAX_ENERGY}/>
+                <Energy energy={energy} maxEnergy={MAX_ENERGY}/>
             </div>
         </div>
     );
