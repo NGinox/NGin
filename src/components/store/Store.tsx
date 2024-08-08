@@ -46,7 +46,7 @@ const StoreItem: React.FC<StoreItemProps> = ({gptTokens, description, price, wit
                 {description}
             </div>
             <div className="mt-2"></div>
-            <div className="rounded-xl bg-[#E23969] w-full p-1 text-center mt-auto" onClick={handleOnClick}>
+            <div className="rounded-xl bg-[#E23969] w-full p-1 text-center mt-auto hover:bg-white hover:text-[#E23969] hover:animate-ping transition-all" onClick={handleOnClick}>
                 {price} {withTelegramStars ? "Stars" : 'K'}
             </div>
         </div>
