@@ -1,5 +1,7 @@
 import React from "react";
 import PaymentService from "../../services/payment.service.ts";
+import useAppStore from "../../hooks/useAppStore.ts";
+import WebApp from "@twa-dev/sdk";
 const Store = () => {
     return (
         <div className="flex-1 flex flex-col max-h-full">
@@ -29,7 +31,9 @@ const Store = () => {
 const StoreItem: React.FC<StoreItemProps> = ({gptTokens, description, price, withTelegramStars = false}) => {
 
     const handleOnClick = () => {
-        PaymentService.sendPayment(gptTokens, price)
+        PaymentService.sendPayment(gptTokens, price, Number(useAppStore.getState().userId)).then(() => {
+            WebApp.close()
+        })
     }
 
     return (
