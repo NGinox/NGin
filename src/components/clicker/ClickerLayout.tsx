@@ -18,8 +18,6 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
     };
 
     const onHandleClick = (e: React.TouchEvent<HTMLDivElement>) => {
-        e.preventDefault();
-
         let x = 0
         let y = 0
 
@@ -28,7 +26,6 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
             const rect = e.currentTarget.getBoundingClientRect();
             x = touch.clientX - rect.left;
             y = touch.clientY - rect.top;
-            console.log(`Touch ${i + 1} at x: ${x}, y: ${y}`);
         }
 
         if (energy > ENERGY_TO_REDUCE) {

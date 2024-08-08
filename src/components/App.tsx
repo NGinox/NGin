@@ -31,15 +31,10 @@ const App = () => {
             const localEnergy = localStorage.getItem("energy")
             const exitAppTime = localStorage.getItem("exitAppTime")
 
-            console.log('localEnergy', localEnergy)
-            console.log(exitAppTime)
 
             if(localEnergy) {
                 const currentTimestamp = Date.now();
-                console.log('Exit time', exitAppTime)
-                console.log('currentTime', Date.now())
-                console.log('Difference of timestamps', (currentTimestamp - Number(exitAppTime)))
-                const differenceInSeconds = (currentTimestamp - Number(exitAppTime)) / 1000
+                const differenceInSeconds = Math.floor((currentTimestamp - Number(exitAppTime)) / 1000)
                 const currentEnergy = Number(localEnergy) + differenceInSeconds * ENERGY_TO_INCREASE
                 return currentEnergy < MAX_ENERGY ? currentEnergy : MAX_ENERGY
             }
@@ -51,9 +46,6 @@ const App = () => {
 
         return () => {
             clearInterval(interval);
-            console.log(useAppStore.getState().energy)
-            localStorage.setItem("energy", useAppStore.getState().energy.toString())
-            localStorage.setItem("exitAppTime", Date.now().toString())
         }
     }, []);
 

@@ -14,7 +14,7 @@ const Clicker = () => {
         decreaseEnergy: state.decreaseEnergy,
         tokens: state.tokens,
         updateTokens: state.updateTokens
-    }));
+    }))
 
     const [isPressed, setIsPressed] = useState(false)
 
@@ -56,6 +56,11 @@ const Clicker = () => {
             decreaseEnergy(ENERGY_TO_REDUCE)
             updateTokens(tokens + TOKENS_PER_CLICK * touchesCount)
         }
+
+        // TODO: Perform the saving of this data on app close
+
+        localStorage.setItem("energy", useAppStore.getState().energy.toString())
+        localStorage.setItem("exitAppTime", Date.now().toString())
     };
 
     return (
