@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import App from "./components/App.tsx";
+import App from "./App.tsx";
 import ClickerProvider from "./utils/LocalContextProvider.tsx";
 import ComingSoon from "./components/ComingSoon.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";

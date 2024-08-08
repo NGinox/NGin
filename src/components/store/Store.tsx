@@ -14,7 +14,7 @@ const Store = () => {
                 </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 pb-4">
-                <StoreItem gptTokens={600} description={"3 image generations or huge chat request"} price={1} withTelegramStars={true}/>
+                <StoreItem gptTokens={600} description={"3 image generations or huge chat request"} price={15} withTelegramStars={true}/>
                 <StoreItem gptTokens={1000} description={"5 image generations or many chat requests"} price={25} withTelegramStars={true}/>
                 <StoreItem gptTokens={2000}
                            description={"10 image generations or huge philosophical conversation with chat"}

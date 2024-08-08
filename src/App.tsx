@@ -1,10 +1,10 @@
 import {Outlet} from "react-router-dom";
-import BottomNav from "./BottomNav.tsx";
-import useSubscriberData from "../hooks/useSubscriberData.tsx";
-import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE, MAX_ENERGY} from "../constants/constants.ts";
-import useAppStore from "../hooks/useAppStore.ts";
+import BottomNav from "./components/BottomNav.tsx";
+import useSubscriberData from "./hooks/useSubscriberData.tsx";
+import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE, MAX_ENERGY} from "./constants/constants.ts";
+import useAppStore from "./hooks/useAppStore.ts";
 import {useEffect} from "react";
-import Loader from "./Loader.tsx";
+import Loader from "./components/Loader.tsx";
 
 const App = () => {
 
