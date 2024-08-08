@@ -58,7 +58,6 @@ const Clicker = () => {
         }
 
         // TODO: Perform the saving of this data on app close
-
         localStorage.setItem("energy", useAppStore.getState().energy.toString())
         localStorage.setItem("exitAppTime", Date.now().toString())
     };
@@ -68,7 +67,7 @@ const Clicker = () => {
             tokens={tokens}
             energy={energy}
             isPressed={isPressed}
-            updateStateOnClick={(e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => updateStateOnClick(e)}/>
+            updateStateOnClick={(e: React.TouchEvent<HTMLDivElement>) => updateStateOnClick(e)}/>
     );
 };
 

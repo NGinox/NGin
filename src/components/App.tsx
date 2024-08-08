@@ -25,7 +25,7 @@ const App = () => {
             if(useAppStore.getState().energy < MAX_ENERGY) {
                 useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
             }
-        }, DELAY_OF_INCREASING_OF_ENERGY); // Restore 1 energy point every second
+        }, DELAY_OF_INCREASING_OF_ENERGY);
 
         const getEnergy = (): number => {
             const localEnergy = localStorage.getItem("energy")

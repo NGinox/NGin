@@ -32,7 +32,6 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, energy, u
             updateStateOnClick(e)
             setClicks([...clicks, { id: Date.now(), x, y }]);
         }
-
     }
 
     return (
