@@ -1,11 +1,11 @@
 import {useOutletContext} from "react-router-dom";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import SubscriberService from "../../services/subscriber.service.ts";
-import Loader from "../Loader.tsx";
 import {Level} from "../../types/level.type.ts";
 import {useState} from "react";
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 import UpgradeLayout from "./UpgradeLayout.tsx";
+import HandleLoadingAndError from "../HandleLoadingAndError.tsx";
 
 const Upgrade = () => {
 
@@ -42,24 +42,18 @@ const Upgrade = () => {
         return null
     };
 
-    if(isLoading) {
-        return <Loader/>
-    }
-
-    if(isError) {
-        return <div>error</div>
-    }
-
-
     return (
-        <UpgradeLayout
-            currentLevelGrade={subscriber.currentLevel.grade}
-            maxLevel={getNextLevel()}
-            upgradeCost={subscriber.currentLevel.levelUpgradeCost}
-            isUpgradePending={isUpgradePending}
-            enoughTokensForUpdate={enoughTokensForUpdate}
-            updateLevel={() => updateLevelMutation.mutate()}
-        />
+        <HandleLoadingAndError isLoading={isLoading} isError={isError}>
+            <UpgradeLayout
+                currentLevelGrade={subscriber.currentLevel.grade}
+                nextLevel={getNextLevel()}
+                upgradeCost={subscriber.currentLevel.levelUpgradeCost}
+                isUpgradePending={isUpgradePending}
+                enoughTokensForUpdate={enoughTokensForUpdate}
+                updateLevel={() => updateLevelMutation.mutate()}
+            />
+        </HandleLoadingAndError>
+
     );
 };
 

@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import axiosInstance from "../api/interceptors.ts";
 import {ClickerSubscriber, CombinedSubscriberData, Subscriber} from "../types/subscriber.type.ts";
 class SubscriberService {
+
     private BASE_URL = "/subs"
 
     async getSubscriberData(subscriberId: number): Promise<CombinedSubscriberData> {
@@ -29,7 +30,6 @@ class SubscriberService {
             return combinedData;
 
         } catch (error) {
-            console.error('Error fetching subscriber data:', error);
             throw new Error('Failed to fetch subscriber data');
         }
     }

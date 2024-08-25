@@ -4,7 +4,7 @@ import useSubscriberData from "./hooks/useSubscriberData.tsx";
 import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE, MAX_ENERGY} from "./constants/constants.ts";
 import useAppStore from "./hooks/useAppStore.ts";
 import {useEffect} from "react";
-import Loader from "./components/Loader.tsx";
+import HandleLoadingAndError from "./components/HandleLoadingAndError.tsx";
 
 const App = () => {
 
@@ -50,26 +50,16 @@ const App = () => {
     }, []);
 
 
-
-    if (isLoading) {
-        return (
-            <Loader/>
-        )
-    }
-
-    if (isError) {
-        return <div>Error loading data</div>;
-    }
-
     return (
-        <div
-            className="min-h-screen max-h-screen p-4 bg-gradient-to-b from-[#000] to-[#271732] flex flex-col items-center text-white font-futura">
-            <div id="clicker" className="flex-grow flex flex-col w-full overflow-auto">
-                <Outlet context={subscriber}/>
+        <HandleLoadingAndError isLoading={isLoading} isError={isError}>
+            <div
+                className="min-h-screen max-h-screen p-4 bg-gradient-to-b from-[#000] to-[#271732] flex flex-col items-center text-white font-futura">
+                <div id="clicker" className="flex-grow flex flex-col w-full overflow-auto">
+                    <Outlet context={subscriber}/>
+                </div>
+                <BottomNav/>
             </div>
-            <BottomNav/>
-        </div>
-
+        </HandleLoadingAndError>
     );
 };
 

@@ -3,7 +3,7 @@ import {Level} from "../../types/level.type.ts";
 
 interface UpgradeLayoutProps {
     currentLevelGrade: number;
-    maxLevel: null | Level;
+    nextLevel: null | Level;
     upgradeCost: number;
     enoughTokensForUpdate: boolean;
     isUpgradePending: boolean;
@@ -11,11 +11,12 @@ interface UpgradeLayoutProps {
 }
 const UpgradeLayout: React.FC<UpgradeLayoutProps> = (
     {   currentLevelGrade,
-        maxLevel,
+        nextLevel,
         upgradeCost,
         enoughTokensForUpdate,
         isUpgradePending,
-        updateLevel}) => {
+        updateLevel
+    }) => {
 
     return (
         <div className="flex-1 flex flex-col max-h-full">
@@ -37,8 +38,8 @@ const UpgradeLayout: React.FC<UpgradeLayoutProps> = (
                         <div className="ml-auto opacity-60">{currentLevelGrade} Lvl</div>
                     </div>
                     <div className="flex justify-between items-center">
-                        {!maxLevel && <div className="text-sm">{upgradeCost} GPT Tokens</div>}
-                        <UpgradeButton maxLevel={maxLevel} enoughTokensForUpdate={enoughTokensForUpdate} isUpgradePending={isUpgradePending} updateLevel={updateLevel}/>
+                        {nextLevel && <div className="text-sm">{upgradeCost} GPT Tokens</div>}
+                        <UpgradeButton nextLevel={nextLevel} enoughTokensForUpdate={enoughTokensForUpdate} isUpgradePending={isUpgradePending} updateLevel={updateLevel}/>
                     </div>
                 </div>
 
@@ -49,13 +50,13 @@ const UpgradeLayout: React.FC<UpgradeLayoutProps> = (
 };
 
 interface UpgradeButtonProps {
-    maxLevel: null | Level;
+    nextLevel: null | Level;
     enoughTokensForUpdate: boolean;
     isUpgradePending: boolean;
     updateLevel: () => void;
 }
 const UpgradeButton: React.FC<UpgradeButtonProps> = (
-    {   maxLevel,
+    {   nextLevel,
         enoughTokensForUpdate,
         isUpgradePending,
         updateLevel
@@ -63,7 +64,7 @@ const UpgradeButton: React.FC<UpgradeButtonProps> = (
 
     const buttonStyle = "flex flex-col items-center gap-1 flex-1 p-2 rounded-xl bg-[#E23969] ml-auto pl-4 pr-4 max-w-min whitespace-nowrap"
 
-    if (maxLevel) {
+    if (!nextLevel) {
         return <span className={`${buttonStyle} opacity-50`}>Max</span>
     } else {
         return (
