@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import SubscriberService from "../services/subscriber.service.ts";
 import WebApp from "@twa-dev/sdk";
 import useAppStore from "./useAppStore.ts";
+import {CombinedSubscriberData} from "../types/subscriber.type.ts";
 
 const useSubscriberData = () => {
     const [subscriberId, setSubscriberId] = useState<number | null >(null);

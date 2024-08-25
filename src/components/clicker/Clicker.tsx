@@ -4,6 +4,7 @@ import SubscriberService from "../../services/subscriber.service.ts";
 import {DELAY_OF_TOKENS_SYNC, ENERGY_TO_REDUCE} from "../../constants/constants.ts";
 import useAppStore from "../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
+import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 
 const Clicker = () => {
 

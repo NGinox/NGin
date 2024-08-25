@@ -4,6 +4,7 @@ import SubscriberService from "../../services/subscriber.service.ts";
 import Loader from "../Loader.tsx";
 import {Level} from "../../types/level.type.ts";
 import {useState} from "react";
+import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 
 const Upgrade = () => {
 

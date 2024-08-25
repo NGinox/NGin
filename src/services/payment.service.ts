@@ -1,5 +1,6 @@
 import {AxiosResponse} from "axios";
 import axiosInstance from "../api/interceptors.ts";
+import {Subscriber} from "../types/subscriber.type.ts";
 
 class PaymentService {
     private BASE_URL = "/payment"
