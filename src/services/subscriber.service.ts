@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import axiosInstance from "../api/interceptors.ts";
+import {ClickerSubscriber, CombinedSubscriberData, Subscriber} from "../types/subscriber.type.ts";
 class SubscriberService {
     private BASE_URL = "/subs"
 

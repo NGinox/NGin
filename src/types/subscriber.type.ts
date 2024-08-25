@@ -1,4 +1,4 @@
-interface Subscriber {
+export interface Subscriber {
     chat_id: number;
     user_id: number;
     first_name?: string;
@@ -22,7 +22,7 @@ interface Subscriber {
     tts_voice: string;
 }
 
-interface ClickerSubscriber {
+export interface ClickerSubscriber {
     name: string;
     _id: number;
     currentLevel: {
@@ -33,5 +33,4 @@ interface ClickerSubscriber {
 }
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface CombinedSubscriberData extends Subscriber, ClickerSubscriber {}
+export interface CombinedSubscriberData extends Subscriber, ClickerSubscriber {}
