@@ -34,6 +34,7 @@ const Upgrade = () => {
     })
 
     const getNextLevel = (): Level | null => {
+        // if user can update -> send object of next level, if he's already at max level -> send null
         if (levels) {
             return levels.find(level => level.grade > subscriber.currentLevel.grade) || null;
         }
