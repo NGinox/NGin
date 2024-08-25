@@ -22,12 +22,10 @@ class SubscriberService {
             const additionalData = additionalDataResponse.data;
 
             // Combine the responses into one object
-            const combinedData: CombinedSubscriberData = {
+            return <CombinedSubscriberData> {
                 ...subscriber,
                 ...additionalData
             };
-            console.log(combinedData)
-            return combinedData;
 
         } catch (error) {
             throw new Error('Failed to fetch subscriber data');
