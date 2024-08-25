@@ -21,3 +21,17 @@ interface Subscriber {
     tags?: string;
     tts_voice: string;
 }
+
+interface ClickerSubscriber {
+    name: string;
+    _id: number;
+    currentLevel: {
+        grade: number;
+        tokensPerClick: number;
+        levelUpgradeCost: number;
+    }
+}
+
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface CombinedSubscriberData extends Subscriber, ClickerSubscriber {}

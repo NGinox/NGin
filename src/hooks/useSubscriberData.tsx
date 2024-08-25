@@ -5,11 +5,16 @@ import WebApp from "@twa-dev/sdk";
 import useAppStore from "./useAppStore.ts";
 
 const useSubscriberData = () => {
-    const [subscriberId, setSubscriberId] = useState<number>(0);
+    const [subscriberId, setSubscriberId] = useState<number | null >(null);
 
-    const { data: subscriber, isLoading, isError, error } = useQuery<Subscriber>({
+    const { data: subscriber, isLoading, isError, error } = useQuery<CombinedSubscriberData>({
             queryKey: ['subscriber', subscriberId],
-            queryFn: () => SubscriberService.getSubscriberData(subscriberId),
+            queryFn: () => {
+                if (subscriberId) {
+                    return SubscriberService.getSubscriberData(subscriberId);
+                }
+                throw new Error('No subscriber data available');
+            },
             enabled: subscriberId !== 0,
         }
     );

@@ -1,13 +1,13 @@
 import ClickerLayout from "./ClickerLayout.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import SubscriberService from "../../services/subscriber.service.ts";
-import useSubscriberData from "../../hooks/useSubscriberData.tsx";
-import {DELAY_OF_TOKENS_SYNC, ENERGY_TO_REDUCE, TOKENS_PER_CLICK} from "../../constants/constants.ts";
+import {DELAY_OF_TOKENS_SYNC, ENERGY_TO_REDUCE} from "../../constants/constants.ts";
 import useAppStore from "../../hooks/useAppStore.ts";
+import {useOutletContext} from "react-router-dom";
 
 const Clicker = () => {
 
-    const {subscriber} = useSubscriberData()
+    const subscriber = useOutletContext<CombinedSubscriberData>();
 
     const { energy, decreaseEnergy, tokens, updateTokens } = useAppStore((state) => ({
         energy: state.energy,
@@ -54,7 +54,7 @@ const Clicker = () => {
 
         if(energy > ENERGY_TO_REDUCE) {
             decreaseEnergy(ENERGY_TO_REDUCE)
-            updateTokens(tokens + TOKENS_PER_CLICK * touchesCount)
+            updateTokens(tokens + subscriber.currentLevel.tokensPerClick * touchesCount)
         }
 
         // TODO: Perform the saving of this data on app close
@@ -66,6 +66,7 @@ const Clicker = () => {
         <ClickerLayout
             tokens={tokens}
             energy={energy}
+            tokensPerClick={subscriber.currentLevel.tokensPerClick}
             isPressed={isPressed}
             updateStateOnClick={(e: React.TouchEvent<HTMLDivElement>) => updateStateOnClick(e)}/>
     );

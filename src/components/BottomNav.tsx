@@ -19,7 +19,7 @@ const BottomNav = () => {
                 }>
                     <span>Earn</span>
                 </NavLink>
-                <NavLink to={'/coming-soon'} className={({ isActive}) =>
+                <NavLink to={'/upgrade'} className={({ isActive}) =>
                     isActive ? activeNavLinkStyle : navLinkStyle
                 }>
                     <span>Upgrade</span>
