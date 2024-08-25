@@ -1,7 +1,7 @@
 import ClickerLayout from "./ClickerLayout.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import SubscriberService from "../../services/subscriber.service.ts";
-import {DELAY_OF_TOKENS_SYNC, ENERGY_TO_REDUCE} from "../../constants/constants.ts";
+import {DELAY_OF_TOKENS_SYNC} from "../../constants/constants.ts";
 import useAppStore from "../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
@@ -9,6 +9,12 @@ import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 const Clicker = () => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>();
+
+    const tokensPerClick = subscriber.currentLevel.tokensPerClick
+
+    // Mirror the variable to pay attention that value of tokens to reduce is equal to energy to reduce
+    const energyToReduce = tokensPerClick
+
 
     const { energy, decreaseEnergy, tokens, updateTokens } = useAppStore((state) => ({
         energy: state.energy,
@@ -21,7 +27,7 @@ const Clicker = () => {
 
     const timerRef = useRef<number | null>(null);
 
-    // To prevent server overload the request will be sent when user is not clicking for 1 second
+    // To prevent server overload the request will be sent when user is not clicking for DELAY_OF_TOKENS_SYNC
     useEffect(() => {
         if (timerRef.current !== null) {
             clearTimeout(timerRef.current);
@@ -37,11 +43,11 @@ const Clicker = () => {
 
 
     const updateStateOnClick = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
-        if (ENERGY_TO_REDUCE - ENERGY_TO_REDUCE < 0) {
+        if (energyToReduce - energyToReduce < 0) {
             return;
         }
 
-        // Animate tap on coin
+        // Animate coin on tap
         setIsPressed(true)
         setTimeout(() => {
             setIsPressed(false)
@@ -53,9 +59,9 @@ const Clicker = () => {
             touchesCount = e.touches.length
         }
 
-        if(energy > ENERGY_TO_REDUCE) {
-            decreaseEnergy(ENERGY_TO_REDUCE)
-            updateTokens(tokens + subscriber.currentLevel.tokensPerClick * touchesCount)
+        if(energy > energyToReduce) {
+            decreaseEnergy(energyToReduce)
+            updateTokens(tokens + tokensPerClick * touchesCount)
         }
 
         // TODO: Perform the saving of this data on app close
@@ -67,7 +73,8 @@ const Clicker = () => {
         <ClickerLayout
             tokens={tokens}
             energy={energy}
-            tokensPerClick={subscriber.currentLevel.tokensPerClick}
+            tokensPerClick={tokensPerClick}
+            energyToReduce={energyToReduce}
             isPressed={isPressed}
             updateStateOnClick={(e: React.TouchEvent<HTMLDivElement>) => updateStateOnClick(e)}/>
     );

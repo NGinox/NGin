@@ -1,16 +1,24 @@
 import React, {useState} from 'react';
 import {colorfulRobot, highVoltage} from "../../images";
-import {ENERGY_TO_REDUCE, MAX_ENERGY} from "../../constants/constants.ts";
+import {MAX_ENERGY} from "../../constants/constants.ts";
 
 
 interface ClickerViewProps {
     isPressed: boolean;
     tokens: number;
     tokensPerClick: number;
+    energyToReduce: number;
     energy: number
     updateStateOnClick: (e: React.TouchEvent<HTMLDivElement>) => void;
 }
-const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, tokensPerClick, energy, updateStateOnClick}) => {
+const ClickerLayout: React.FC<ClickerViewProps> = (
+    {   isPressed,
+        tokens,
+        tokensPerClick,
+        energyToReduce,
+        energy,
+        updateStateOnClick
+    }) => {
 
     const [clicks, setClicks] =
         useState<{ id: number, x: number, y: number }[]>([]);
@@ -30,7 +38,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = ({isPressed, tokens, tokensPer
             y = touch.clientY - rect.top;
         }
 
-        if (energy > ENERGY_TO_REDUCE) {
+        if (energy > energyToReduce) {
             updateStateOnClick(e)
             setClicks([...clicks, { id: Date.now(), x, y }]);
         }
