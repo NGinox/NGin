@@ -16,7 +16,7 @@ class SubscriberService {
 
             // Second API call to get additional data
             const additionalDataResponse: AxiosResponse<ClickerSubscriber> = await axios.get(
-                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/${subscriber.username}`,
+                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/${subscriber.user_id}`,
             );
 
             const additionalData = additionalDataResponse.data;
