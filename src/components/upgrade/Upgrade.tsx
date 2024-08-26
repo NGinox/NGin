@@ -6,6 +6,7 @@ import {useState} from "react";
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 import UpgradeLayout from "./UpgradeLayout.tsx";
 import HandleLoadingAndError from "../HandleLoadingAndError.tsx";
+import useAppStore from "../../hooks/useAppStore.ts";
 
 const Upgrade = () => {
 
@@ -13,7 +14,12 @@ const Upgrade = () => {
 
     const queryClient = useQueryClient()
     const [isUpgradePending, setIsUpgradePending] = useState(false)
-    const enoughTokensForUpdate = subscriber.tokens > subscriber.currentLevel.levelUpgradeCost
+
+    const { tokens } = useAppStore((state) => ({
+        tokens: state.tokens,
+    }))
+
+    const enoughTokensForUpdate = tokens >= subscriber.currentLevel.levelUpgradeCost
 
 
     const {data: levels, isLoading, isError} = useQuery<Level[]>({
