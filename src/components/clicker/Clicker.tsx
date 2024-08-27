@@ -57,12 +57,12 @@ const Clicker = () => {
         let touchesCount = 1
 
         if ('touches' in e) {
-            touchesCount = e.touches.length
+            touchesCount = e.changedTouches.length
         }
 
         if (energy > energyToReduce) {
             decreaseEnergy(energyToReduce)
-            updateTokens(tokens + (tokensPerClick * touchesCount) / 2)
+            updateTokens(tokens + tokensPerClick * touchesCount)
         }
 
         // TODO: Perform the saving of this data on app close
