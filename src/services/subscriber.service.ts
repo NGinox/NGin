@@ -38,18 +38,10 @@ class SubscriberService {
         ).then(res => res.data)
     }
 
-    async updateClickerLevel(subscriber: CombinedSubscriberData) {
-        return axiosInstance.put(this.BASE_URL + "/remove-tokens", {
-            user_id: subscriber.user_id,
-            tokensToRemove: subscriber.currentLevel.levelUpgradeCost
-        }).then(() =>
-            axios.put(
-                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/upgrade-level`,
-                {
-                    id: subscriber._id
-                }
-            )
-        )
+    async getMaxEnergyLevels() {
+        return axios.get(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/max-energy-level`,
+        ).then(res => res.data)
     }
 
     async updateSubscriberTokens(subscriberId: number, tokens: number) {
@@ -57,6 +49,34 @@ class SubscriberService {
             user_id: subscriberId,
             tokens: tokens
         })
+    }
+
+    async updateClickerLevel(subscriberId: number, levelUpgradeCost: number) {
+        return axiosInstance.put(this.BASE_URL + "/remove-tokens", {
+            user_id: subscriberId,
+            tokensToRemove: levelUpgradeCost
+        }).then(() =>
+            axios.put(
+                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/upgrade-level`,
+                {
+                    telegramId: subscriberId
+                }
+            )
+        )
+    }
+
+    async updateSubscriberMaxEnergy(subscriberId: number, levelUpgradeCost: number) {
+        return axiosInstance.put(this.BASE_URL + "/remove-tokens", {
+            user_id: subscriberId,
+            tokensToRemove: levelUpgradeCost
+        }).then(() =>
+            axios.patch(
+                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/upgrade-max-energy`,
+                {
+                    telegramId: subscriberId
+                }
+            )
+        )
     }
 }
 

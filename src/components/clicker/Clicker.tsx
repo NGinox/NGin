@@ -11,6 +11,7 @@ const Clicker = () => {
     const subscriber = useOutletContext<CombinedSubscriberData>();
 
     const tokensPerClick = subscriber.currentLevel.tokensPerClick
+    const maxEnergy = subscriber.currentMaxEnergyLevel.maxEnergy
 
     // Mirror the variable to pay attention that value of tokens to reduce is equal to energy to reduce
     const energyToReduce = tokensPerClick
@@ -73,6 +74,7 @@ const Clicker = () => {
         <ClickerLayout
             tokens={tokens}
             energy={energy}
+            maxEnergy={maxEnergy}
             tokensPerClick={tokensPerClick}
             energyToReduce={energyToReduce}
             isPressed={isPressed}

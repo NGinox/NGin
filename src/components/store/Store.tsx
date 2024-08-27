@@ -5,7 +5,7 @@ import WebApp from "@twa-dev/sdk";
 const Store = () => {
     return (
         <div className="flex-1 flex flex-col max-h-full">
-            <div className="text-3xl py-4 text-center">Welcome to the store!</div>
+            <div className="text-3xl pb-4 pt-2 text-center">Welcome to the store!</div>
             <div className="text-xs text-center font-futuraRegular">
                 <span className="text-sm">Here you can buy GPT Tokens for Telegram Stars</span>
                 <div>

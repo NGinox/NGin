@@ -1,7 +1,7 @@
 import {Outlet} from "react-router-dom";
 import BottomNav from "./components/BottomNav.tsx";
 import useSubscriberData from "./hooks/useSubscriberData.tsx";
-import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE, MAX_ENERGY} from "./constants/constants.ts";
+import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE} from "./constants/constants.ts";
 import useAppStore from "./hooks/useAppStore.ts";
 import {useEffect} from "react";
 import HandleLoadingAndError from "./components/HandleLoadingAndError.tsx";
@@ -17,37 +17,38 @@ const App = () => {
     useEffect(() => {
         if(subscriber) {
             useAppStore.getState().updateTokens(subscriber.tokens)
+
+            const maxEnergy = subscriber.currentMaxEnergyLevel.maxEnergy
+
+            const interval = setInterval(() => {
+                if(useAppStore.getState().energy < maxEnergy) {
+                    useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
+                }
+            }, DELAY_OF_INCREASING_OF_ENERGY);
+
+            const getEnergy = (): number => {
+                const localEnergy = localStorage.getItem("energy")
+                const exitAppTime = localStorage.getItem("exitAppTime")
+
+
+                if(localEnergy) {
+                    const currentTimestamp = Date.now();
+                    const differenceInSeconds = Math.floor((currentTimestamp - Number(exitAppTime)) / 1000)
+                    const currentEnergy = Number(localEnergy) + differenceInSeconds * ENERGY_TO_INCREASE
+
+                    return currentEnergy < maxEnergy ? currentEnergy : maxEnergy
+                }
+
+                return maxEnergy
+            }
+
+            useAppStore.getState().updateEnergy(getEnergy())
+
+            return () => {
+                clearInterval(interval);
+            }
         }
     }, [subscriber]);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if(useAppStore.getState().energy < MAX_ENERGY) {
-                useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
-            }
-        }, DELAY_OF_INCREASING_OF_ENERGY);
-
-        const getEnergy = (): number => {
-            const localEnergy = localStorage.getItem("energy")
-            const exitAppTime = localStorage.getItem("exitAppTime")
-
-
-            if(localEnergy) {
-                const currentTimestamp = Date.now();
-                const differenceInSeconds = Math.floor((currentTimestamp - Number(exitAppTime)) / 1000)
-                const currentEnergy = Number(localEnergy) + differenceInSeconds * ENERGY_TO_INCREASE
-                return currentEnergy < MAX_ENERGY ? currentEnergy : MAX_ENERGY
-            }
-
-            return MAX_ENERGY
-        }
-
-        useAppStore.getState().updateEnergy(getEnergy())
-
-        return () => {
-            clearInterval(interval);
-        }
-    }, []);
 
 
     return (

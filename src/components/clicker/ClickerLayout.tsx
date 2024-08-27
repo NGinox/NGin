@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {colorfulRobot, highVoltage} from "../../images";
-import {MAX_ENERGY} from "../../constants/constants.ts";
 
 
 interface ClickerViewProps {
@@ -8,7 +7,8 @@ interface ClickerViewProps {
     tokens: number;
     tokensPerClick: number;
     energyToReduce: number;
-    energy: number
+    energy: number;
+    maxEnergy: number;
     updateStateOnClick: (e: React.TouchEvent<HTMLDivElement>) => void;
 }
 const ClickerLayout: React.FC<ClickerViewProps> = (
@@ -17,6 +17,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = (
         tokensPerClick,
         energyToReduce,
         energy,
+        maxEnergy,
         updateStateOnClick
     }) => {
 
@@ -83,7 +84,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = (
 
             {/* Energy bar */}
             <div className="w-full pb-4 z-10 flex flex-col gap-4">
-                <Energy energy={Number(energy.toFixed(1))} maxEnergy={MAX_ENERGY}/>
+                <Energy energy={Number(energy.toFixed(1))} maxEnergy={maxEnergy}/>
             </div>
         </div>
     );

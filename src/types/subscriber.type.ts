@@ -23,11 +23,17 @@ export interface Subscriber {
 }
 
 export interface ClickerSubscriber {
-    name: string;
+    telegramId: number;
+    maxEnergy: number;
     _id: number;
     currentLevel: {
         grade: number;
         tokensPerClick: number;
+        levelUpgradeCost: number;
+    },
+    currentMaxEnergyLevel: {
+        grade: number;
+        maxEnergy: number;
         levelUpgradeCost: number;
     }
 }
