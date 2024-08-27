@@ -5,6 +5,7 @@ import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE} from "./constants/con
 import useAppStore from "./hooks/useAppStore.ts";
 import {useEffect} from "react";
 import HandleLoadingAndError from "./components/HandleLoadingAndError.tsx";
+import {Toaster} from "react-hot-toast";
 
 const App = () => {
 
@@ -53,6 +54,21 @@ const App = () => {
 
     return (
         <HandleLoadingAndError isLoading={isLoading} isError={isError}>
+            <div><Toaster
+                toastOptions={{
+                    className: '',
+                    style: {
+                        backgroundColor: '#3c284a',
+                        color: '#fff',
+                        fontFamily: 'Futura'
+                    },
+                    success: {
+                        iconTheme: {
+                            primary: '#E23969',
+                            secondary: '#fff',
+                        },
+                    },
+                }}/></div>
             <div
                 className="min-h-screen max-h-screen p-4 bg-gradient-to-b from-[#000] to-[#271732] flex flex-col items-center text-white font-futura">
                 <div id="clicker" className="flex-grow flex flex-col w-full overflow-auto">

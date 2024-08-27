@@ -34,7 +34,12 @@ const UpgradeBox: React.FC<UpgradeBoxProps> = (
             </div>
             <div className="flex justify-between items-center">
 
-                {nextLevel && <div className="text-sm">{upgradeCost} GPT Tokens</div>}
+                <div>
+                    {nextLevel && <div className="text-sm opacity-50"> Next Level: {nextLevel.value}</div>}
+                    {nextLevel && <div className="text-sm ">{upgradeCost} GPT Tokens</div>}
+                </div>
+
+
 
                 <UpgradeButton
                     nextLevel={nextLevel}

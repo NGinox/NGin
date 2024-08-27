@@ -18,12 +18,18 @@ const UpgradeButton: React.FC<UpgradeButtonProps> = (
 
     if (!nextLevel) {
         return <span className={`${buttonStyle} opacity-50`}>Max</span>
-    } else {
-        return (
-            <span onClick={() => enoughTokensForUpdate && !isUpgradePending && updateLevel()}
-                  className={`${buttonStyle} ${(!enoughTokensForUpdate || isUpgradePending) && "opacity-50"}`}>Level Up</span>
-        )
     }
+
+    if (isUpgradePending) {
+        return <span
+            className="p-2 rounded-xl bg-[#3c284a] ml-auto pl-4 pr-4 max-w-min animate-pulse text-purple-300 whitespace-nowrap">Upgrading...</span>
+    }
+
+    return (
+        <span onClick={() => enoughTokensForUpdate && updateLevel()}
+              className={`${buttonStyle} ${!enoughTokensForUpdate  && "opacity-50"}`}>Level Up</span>
+    )
+
 }
 
 export default UpgradeButton
