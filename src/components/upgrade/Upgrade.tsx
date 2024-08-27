@@ -8,7 +8,7 @@ const Upgrade = () => {
 
     return (
         <div className="flex-1 flex flex-col max-h-full">
-            <div className="text-3xl pb-4 pt-2 text-center">
+            <div className="text-3xl pb-4 text-center">
                 <span className="inline-block">Upgrade</span>
                 <span className="ml-2 inline-block align-middle absolute">🚀</span>
             </div>
