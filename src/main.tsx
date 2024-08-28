@@ -8,6 +8,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import Clicker from "./components/clicker/Clicker.tsx";
 import Store from "./components/store/Store.tsx";
 import Upgrade from "./components/upgrade/Upgrade.tsx";
+import Tasks from "./components/tasks/Tasks.tsx";
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: "upgrade",
                 element: <Upgrade/>,
+            },
+            {
+                path: "tasks",
+                element: <Tasks/>,
             },
         ],
     },

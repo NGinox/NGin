@@ -35,7 +35,8 @@ export interface ClickerSubscriber {
         grade: number;
         maxEnergy: number;
         levelUpgradeCost: number;
-    }
+    },
+    tasks: []
 }
 
 

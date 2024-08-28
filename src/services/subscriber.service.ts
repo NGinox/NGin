@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import axiosInstance from "../api/interceptors.ts";
 import {ClickerSubscriber, CombinedSubscriberData, Subscriber} from "../types/subscriber.type.ts";
+import {Task} from "../types/task.type.ts";
 class SubscriberService {
 
     private BASE_URL = "/subs"
@@ -44,6 +45,21 @@ class SubscriberService {
         ).then(res => res.data)
     }
 
+    async getTasks(): Promise<Task[]> {
+        return axios.get(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/task`
+        ).then(res => res.data)
+    }
+
+    async completeTask(taskId: string, telegramId: number): Promise<ClickerSubscriber> {
+        return axios.post(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + '/task/complete', {
+                taskId,
+                telegramId
+            }
+        )
+    }
+
     async updateSubscriberTokens(subscriberId: number, tokens: number) {
         await axiosInstance.post(this.BASE_URL + "/update-tokens", {
             user_id: subscriberId,
@@ -77,6 +93,15 @@ class SubscriberService {
                 }
             )
         )
+    }
+
+    async verifyMemberOfChat(chatId: number | string, userId: number) {
+        return axios.post(
+            `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getChatMember`, {
+                chat_id: chatId,
+                user_id: userId
+            }
+        ).then(res => res.data)
     }
 }
 

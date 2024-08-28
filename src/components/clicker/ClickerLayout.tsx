@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {colorfulRobot, highVoltage} from "../../images";
+import {NavLink} from "react-router-dom";
 
 
 interface ClickerViewProps {
@@ -48,17 +49,11 @@ const ClickerLayout: React.FC<ClickerViewProps> = (
     return (
         <div className="h-full w-full z-10 flex flex-col items-center text-white flex-grow">
 
-            {/* Squads and counter */}
-            <div className="w-full px-4 z-10">
-                <div className="bg-[#1f1f1f] text-center py-2 rounded-xl">
-                    <p className="text-lg opacity-30">Squads coming soon...</p>
-                </div>
-            </div>
-
             {/*Coin*/}
             <div className="flex-grow flex flex-col items-center">
-                <div className="mt-12 text-5xl font-bold flex items-center">
-                    <span className="ml-2" style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(Number(tokens.toFixed(1)))}</span>
+                <div className="text-5xl font-bold flex items-center">
+                    <span className="mt-12"
+                          style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(Number(tokens.toFixed(1)))}</span>
                 </div>
                 <div className="relative flex mt-4 flex-grow items-center" onTouchStart={onHandleClick}>
                     <div
@@ -93,13 +88,17 @@ const ClickerLayout: React.FC<ClickerViewProps> = (
 const Energy = ({ energy, maxEnergy}: EnergyProps) => {
     return (
         <>
-            <div className="w-full flex flex-row items-center" style={{fontFamily: 'Futura, sans-family'}}>
+            <div className="w-full flex flex-row items-center gap-2" style={{fontFamily: 'Futura, sans-family'}}>
                 <img src={highVoltage} width={32} height={32} alt="High Voltage"/>
-                <div className="flex flex-row items-center ml-auto">
+                <div className="flex flex-row items-center">
                     <div className="text-white text-xl font-bold">{energy} / <span
                         className="opacity-50 ">{maxEnergy}</span>
                     </div>
                 </div>
+                <NavLink to={'/upgrade'} className="ml-auto text-xl flex gap-2">
+                    <div>Boost</div>
+                    <div>🚀</div>
+                </NavLink>
             </div>
             <div className="w-full bg-[#18091c] rounded-full mt-2">
                 <div className="bg-gradient-to-r from-[#f3c45a] to-[#fffad0] h-4 rounded-full"

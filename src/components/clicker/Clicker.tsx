@@ -79,6 +79,8 @@ const Clicker = () => {
             energyToReduce={energyToReduce}
             isPressed={isPressed}
             updateStateOnClick={(e: React.TouchEvent<HTMLDivElement>) => updateStateOnClick(e)}/>
+
+
     );
 };
 
