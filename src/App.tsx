@@ -1,4 +1,3 @@
-import {Outlet} from "react-router-dom";
 import BottomNav from "./components/BottomNav.tsx";
 import useSubscriberData from "./hooks/useSubscriberData.tsx";
 import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE} from "./constants/constants.ts";
@@ -6,6 +5,7 @@ import useAppStore from "./hooks/useAppStore.ts";
 import {useEffect} from "react";
 import HandleLoadingAndError from "./components/HandleLoadingAndError.tsx";
 import {Toaster} from "react-hot-toast";
+import AnimatedOutlet from "./components/AnimatedOutlet.tsx";
 
 const App = () => {
 
@@ -72,7 +72,7 @@ const App = () => {
             <div
                 className="min-h-screen max-h-screen p-4 bg-gradient-to-b from-[#000] to-[#271732] flex flex-col items-center text-white font-futura">
                 <div id="clicker" className="flex-grow flex flex-col w-full overflow-auto">
-                    <Outlet context={subscriber}/>
+                    <AnimatedOutlet context={subscriber!}/>
                 </div>
                 <BottomNav/>
             </div>
