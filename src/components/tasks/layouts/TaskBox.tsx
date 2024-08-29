@@ -99,7 +99,7 @@ const TaskBox = ({task, subscriberId, subscriberTokens} : {task: Task, subscribe
                 {completed ?
                     <div className="text-green-500">Completed</div>
                     :
-                    <Button text={task.reward.toString()} onClick={() => setOpen(true)}/>
+                    <Button text={"+ " + task.reward.toString()} onClick={() => setOpen(true)}/>
                 }
 
                 <CustomSheet isOpen={isOpen} onClose={() => setOpen(false)} detent={'content-height'}

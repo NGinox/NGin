@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = (
     }
 
     if (isPending) {
-        return <span className={`p-2 rounded-xl bg-[#3c284a] ml-auto pl-4 pr-4 animate-pulse text-purple-300 whitespace-nowrap ${style.includes('max-w-full') ? 'max-w-full' : 'max-w-min'} ${style}`}>{text}</span>
+        return <span className={`p-2 rounded-xl bg-[#3c284a] ml-auto pl-4 pr-4 animate-pulse text-purple-300 whitespace-nowrap w-full ${style.includes('max-w-full') ? 'max-w-full' : 'max-w-min'} ${style}`}>{text}</span>
     }
 
     return <span onClick={onClick} className={buttonStyle}>{text}</span>
