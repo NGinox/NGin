@@ -35,7 +35,16 @@ const useSubscriberData = () => {
         }
     }, []);
 
-    return { subscriber, isLoading, isError, error };
+    if (isLoading) {
+        return { subscriber: null, isLoading, isError, error };
+    }
+
+    if (isError || !subscriber) {
+        throw new Error(error?.message || 'Subscriber data could not be loaded');
+    }
+
+    // TypeScript will infer that subscriber is non-null here
+    return { subscriber, isLoading: false, isError, error: null };
 };
 
 export default useSubscriberData;

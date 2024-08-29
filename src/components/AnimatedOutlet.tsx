@@ -1,9 +1,8 @@
 import React from "react";
 import {Outlet, useLocation} from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import {CombinedSubscriberData} from "../types/subscriber.type.ts";
 
-const AnimatedOutlet = ({ context }: { context: CombinedSubscriberData }): React.JSX.Element => {
+const AnimatedOutlet = ({ context }: { context: unknown }): React.JSX.Element => {
     const location = useLocation();
 
     return (

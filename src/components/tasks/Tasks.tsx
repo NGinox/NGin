@@ -4,7 +4,7 @@ import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 
 const Tasks = () => {
 
-    const subscriber = useOutletContext<CombinedSubscriberData>();
+    const subscriber = useOutletContext<CombinedSubscriberData>()
 
     return (
         <div className="flex-1 flex flex-col max-h-full">
@@ -20,7 +20,7 @@ const Tasks = () => {
             <div className="grid grid-cols-1 gap-4 mt-6 pb-4">
 
                 {
-                    subscriber.tasks?.map(task => <TaskBox task={task} subscriberId={subscriber.user_id} subscriberTokens={subscriber.tokens}/>)
+                    subscriber.tasks?.map(task => <TaskBox task={task}/>)
                 }
 
             </div>

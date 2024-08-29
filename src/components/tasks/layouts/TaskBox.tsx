@@ -3,14 +3,20 @@ import tgIcon from "../../../assets/tg-icon.webp"
 import {useState} from "react";
 import {Sheet} from "react-modal-sheet";
 import {styled} from 'styled-components';
-import {Link} from "react-router-dom";
+import {Link, useOutletContext} from "react-router-dom";
 import SubscriberService from "../../../services/subscriber.service.ts";
 import toast from "react-hot-toast";
 import {Task, TaskType} from "../../../types/task.type.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
+import useAppStore from "../../../hooks/useAppStore.ts";
 
-const TaskBox = ({task, subscriberId, subscriberTokens} : {task: Task, subscriberId: number, subscriberTokens: number}) => {
+const TaskBox = ({task} : {task: Task}) => {
 
+    const subscriber = useOutletContext<CombinedSubscriberData>()
+    const { tokens} = useAppStore((state) => ({
+        tokens: state.tokens,
+    }))
 
     const [isOpen, setOpen] = useState(false);
 
@@ -40,7 +46,7 @@ const TaskBox = ({task, subscriberId, subscriberTokens} : {task: Task, subscribe
     const queryClient = useQueryClient()
     const completeTaskMutation = useMutation({
         mutationFn: () => {
-            return SubscriberService.completeTask(task._id, subscriberId, subscriberTokens + task.reward)
+            return SubscriberService.completeTask(task._id, subscriber.user_id, tokens + task.reward)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
@@ -58,14 +64,18 @@ const TaskBox = ({task, subscriberId, subscriberTokens} : {task: Task, subscribe
 
         switch (task.type) {
             case TaskType.telegramGroup:
-                SubscriberService.verifyMemberOfChat(getTelegramChatNameFromLink(task.link), subscriberId).then(res => {
+                SubscriberService.verifyMemberOfChat(getTelegramChatNameFromLink(task.link), subscriber.user_id).then(res => {
                     if (res.ok) {
-                        completeTaskMutation.mutate()
+                        if (res.result.status === "member") {
+                            completeTaskMutation.mutate()
+                        } else {
+                            setIsPending(false)
+                            toast.error('You are not the member of group')
+                        }
                     }
-
                     else {
                         setIsPending(false)
-                        toast.success('Not completed')
+                        toast.error('Not completed')
                     }
                 })
                 break;

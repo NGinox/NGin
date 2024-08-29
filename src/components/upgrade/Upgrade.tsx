@@ -1,14 +1,11 @@
 import UpgradeTapLevel from "./upgradeItems/UpgradeTapLevel.tsx";
 import UpgradeMaxEnergyLevel from "./upgradeItems/UpgradeMaxEnergyLevel.tsx";
 import AnimatedLayout from "../AnimatedLayout.tsx";
-import useSubscriberData from "../../hooks/useSubscriberData.tsx";
+import {useOutletContext} from "react-router-dom";
+import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 const Upgrade = () => {
 
-    const {subscriber, isError, isLoading} = useSubscriberData();
-
-    // TODO: REVIEW THIS SHIT!!!
-    if (isLoading) return <div></div>
-    if (isError) return <div></div>
+    const subscriber = useOutletContext<CombinedSubscriberData>();
 
     return (
         <AnimatedLayout>
