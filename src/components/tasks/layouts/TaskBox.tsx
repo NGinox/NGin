@@ -7,9 +7,9 @@ import {Link} from "react-router-dom";
 import SubscriberService from "../../../services/subscriber.service.ts";
 import toast from "react-hot-toast";
 import {Task, TaskType} from "../../../types/task.type.ts";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 
-const TaskBox = ({task, subscriberId} : {task: Task, subscriberId: number}) => {
+const TaskBox = ({task, subscriberId, subscriberTokens} : {task: Task, subscriberId: number, subscriberTokens: number}) => {
 
 
     const [isOpen, setOpen] = useState(false);
@@ -21,7 +21,7 @@ const TaskBox = ({task, subscriberId} : {task: Task, subscriberId: number}) => {
       .react-modal-sheet-container {
           padding: 0 32px 0 32px;
           background-color: #271732 !important;
-          border-radius: 32px 32px 0px 0px !important;
+          border-radius: 32px 32px 0 0 !important;
       }
       .react-modal-sheet-header {
           
@@ -37,15 +37,19 @@ const TaskBox = ({task, subscriberId} : {task: Task, subscriberId: number}) => {
     const [completed, setCompleted] = useState(task.completed)
     const [isPending, setIsPending] = useState(false)
 
+    const queryClient = useQueryClient()
     const completeTaskMutation = useMutation({
         mutationFn: () => {
-            return SubscriberService.completeTask(task._id, subscriberId)
+            return SubscriberService.completeTask(task._id, subscriberId, subscriberTokens + task.reward)
         },
         onSuccess: () => {
-            setIsPending(false)
-            setCompleted(true)
-            setOpen(false)
-            toast.success('Task completed!')
+            queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
+                setIsPending(false)
+                setCompleted(true)
+                setOpen(false)
+                toast.success('Task completed!')
+            })
+
         },
     })
 
@@ -95,7 +99,7 @@ const TaskBox = ({task, subscriberId} : {task: Task, subscriberId: number}) => {
                 {completed ?
                     <div className="text-green-500">Completed</div>
                     :
-                    <Button text={"+ 2000"} onClick={() => setOpen(true)}/>
+                    <Button text={task.reward.toString()} onClick={() => setOpen(true)}/>
                 }
 
                 <CustomSheet isOpen={isOpen} onClose={() => setOpen(false)} detent={'content-height'}

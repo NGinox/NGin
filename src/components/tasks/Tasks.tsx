@@ -20,7 +20,7 @@ const Tasks = () => {
             <div className="grid grid-cols-1 gap-4 mt-6 pb-4">
 
                 {
-                    subscriber.tasks?.map(task => <TaskBox task={task} subscriberId={subscriber.user_id}/>)
+                    subscriber.tasks?.map(task => <TaskBox task={task} subscriberId={subscriber.user_id} subscriberTokens={subscriber.tokens}/>)
                 }
 
             </div>

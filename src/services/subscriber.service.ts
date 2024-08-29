@@ -51,12 +51,13 @@ class SubscriberService {
         ).then(res => res.data)
     }
 
-    async completeTask(taskId: string, telegramId: number): Promise<ClickerSubscriber> {
-        return axios.post(
-            import.meta.env.VITE_REACT_CLICKER_API_URL + '/task/complete', {
-                taskId,
-                telegramId
-            }
+    async completeTask(taskId: string, telegramId: number, reward: number): Promise<ClickerSubscriber> {
+        return this.updateSubscriberTokens(telegramId, reward).then(() =>
+            axios.post(
+                import.meta.env.VITE_REACT_CLICKER_API_URL + '/task/complete', {
+                    taskId,
+                    telegramId
+                })
         )
     }
 
