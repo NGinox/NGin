@@ -2,7 +2,6 @@ import Button from "../../../ui/Button.tsx";
 import tgIcon from "../../../assets/tg-icon.webp"
 import {useState} from "react";
 import {Sheet} from "react-modal-sheet";
-import {styled} from 'styled-components';
 import {Link, useOutletContext} from "react-router-dom";
 import SubscriberService from "../../../services/subscriber.service.ts";
 import toast from "react-hot-toast";
@@ -10,6 +9,7 @@ import {Task, TaskType} from "../../../types/task.type.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
 import useAppStore from "../../../hooks/useAppStore.ts";
+import {StyledSheet} from "../../../ui/StyledSheet.tsx";
 
 const TaskBox = ({task} : {task: Task}) => {
 
@@ -20,26 +20,6 @@ const TaskBox = ({task} : {task: Task}) => {
 
     const [isOpen, setOpen] = useState(false);
 
-    const CustomSheet = styled(Sheet)`
-      .react-modal-sheet-backdrop {
-        /* custom styles */
-      }
-      .react-modal-sheet-container {
-          padding: 0 32px 0 32px;
-          background-color: #271732 !important;
-          border-radius: 32px 32px 0 0 !important;
-      }
-      .react-modal-sheet-header {
-          
-        /* custom styles */
-      }
-      .react-modal-sheet-drag-indicator {
-          background-color: white !important;
-        /* custom styles */
-      }
-      .react-modal-sheet-content {
-        /* custom styles */
-      }`;
     const [completed, setCompleted] = useState(task.completed)
     const [isPending, setIsPending] = useState(false)
 
@@ -112,7 +92,7 @@ const TaskBox = ({task} : {task: Task}) => {
                     <Button text={"+ " + task.reward.toString()} onClick={() => setOpen(true)}/>
                 }
 
-                <CustomSheet isOpen={isOpen} onClose={() => setOpen(false)} detent={'content-height'}
+                <StyledSheet isOpen={isOpen} onClose={() => setOpen(false)} detent={'content-height'}
                              className={`${isOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-in-out`}>
                     <Sheet.Container>
                         <Sheet.Header />
@@ -142,7 +122,7 @@ const TaskBox = ({task} : {task: Task}) => {
                         </Sheet.Content>
                     </Sheet.Container>
                     <Sheet.Backdrop/>
-                </CustomSheet>
+                </StyledSheet>
             </div>
         </div>
     );
