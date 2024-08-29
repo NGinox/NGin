@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = (
         style = "",
     }) => {
 
-    const buttonStyle = "self-start gap-1 p-2 rounded-xl bg-[#E23969] pl-4 pr-4 ml-auto max-w-min whitespace-nowrap block w-full " + style
+    const buttonStyle = `self-start gap-1 p-2 rounded-xl bg-[#E23969] pl-4 pr-4 ml-auto max-w-min whitespace-nowrap block w-full ${style.includes('max-w-full') ? 'max-w-full' : 'max-w-min'} ` + style
 
     if (!isEnabled) {
         return <span className={`${buttonStyle} opacity-50 `}>{text}</span>
