@@ -6,7 +6,7 @@ import {
     MAX_AUTOBOT_MINING_TIME_HOURS
 } from "./constants/constants.ts";
 import useAppStore from "./hooks/useAppStore.ts";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import HandleLoadingAndError from "./components/HandleLoadingAndError.tsx";
 import toast, {Toaster} from "react-hot-toast";
 import {Outlet} from "react-router-dom";
@@ -15,7 +15,6 @@ import {Sheet} from "react-modal-sheet";
 import Button from "./ui/Button.tsx";
 import {StyledSheet} from "./ui/StyledSheet.tsx";
 import {useQueryClient} from "@tanstack/react-query";
-import useBeforeUnload from "./hooks/useBeforeUnload.tsx";
 const App = () => {
 
     // --- Get subscriber data before the launch of application ---
@@ -78,6 +77,9 @@ const App = () => {
                 }
             }
 
+            // TODO: Place this method on beforeunload of tg web app
+            SubscriberService.updateSubscriberLastOnline(subscriber.user_id, new Date())
+
             return () => {
                 clearInterval(interval);
             }
@@ -99,18 +101,6 @@ const App = () => {
             setFirstOnMount(false)
         }
     }
-
-
-    // --- Before close effects (unMount)
-
-    useBeforeUnload(
-        React.useCallback(() => {
-            if (subscriber) {
-                SubscriberService.updateSubscriberLastOnline(subscriber.user_id, new Date())
-            }
-        }, [subscriber])
-    );
-
 
     return (
         <HandleLoadingAndError isLoading={isLoading} isError={isError}>

@@ -4,6 +4,7 @@ import AnimatedLayout from "../AnimatedLayout.tsx";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 import UpgradeAutoBotLevel from "./upgradeItems/UpgradeAutoBotLevel.tsx";
+import UpgradeBoxSkeleton from "./layouts/UpgradeBoxSkeleton.tsx";
 const Upgrade = () => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>();
@@ -25,6 +26,8 @@ const Upgrade = () => {
                     <UpgradeTapLevel
                         upgradeInfo={subscriber.currentLevel}
                         subscriberId={subscriber.user_id}/>
+
+                    <UpgradeBoxSkeleton/>
 
                     <UpgradeMaxEnergyLevel
                         upgradeInfo={subscriber.currentMaxEnergyLevel}
