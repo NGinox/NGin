@@ -1,16 +1,33 @@
 import BottomNav from "./components/BottomNav.tsx";
 import useSubscriberData from "./hooks/useSubscriberData.tsx";
-import {DELAY_OF_INCREASING_OF_ENERGY, ENERGY_TO_INCREASE} from "./constants/constants.ts";
+import {
+    DELAY_OF_INCREASING_OF_ENERGY,
+    ENERGY_TO_INCREASE,
+    MAX_AUTOBOT_MINING_TIME_HOURS
+} from "./constants/constants.ts";
 import useAppStore from "./hooks/useAppStore.ts";
-import {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import HandleLoadingAndError from "./components/HandleLoadingAndError.tsx";
-import {Toaster} from "react-hot-toast";
-import {Outlet} from "react-router-dom";
+import toast, {Toaster} from "react-hot-toast";
+import {Outlet, useBeforeUnload} from "react-router-dom";
+import SubscriberService from "./services/subscriber.service.ts";
+import {Sheet} from "react-modal-sheet";
+import Button from "./ui/Button.tsx";
+import {StyledSheet} from "./ui/StyledSheet.tsx";
+import {useQueryClient} from "@tanstack/react-query";
 const App = () => {
 
     // --- Get subscriber data before the launch of application ---
 
     const {subscriber, isLoading, isError} = useSubscriberData()
+
+    const [firstOnMount, setFirstOnMount] = useState(true)
+    const [minedTokensSheetIsOpen, setMinedTokensSheetIsOpen] = useState(false)
+    const [minedTokensUpdateIsPending, setMinedTokensUpdateIsPending] = useState(false)
+    const [minedTokens, setMinedTokens] = useState(0)
+    const [lastOnlineDiff, setLastOnlineDiff] = useState(0)
+
+    const queryClient = useQueryClient()
 
     // --- Save tokens in state ---
 
@@ -44,11 +61,61 @@ const App = () => {
 
             useAppStore.getState().updateEnergy(getEnergy())
 
+            const date1 = new Date(Date.now());
+            const date2 = new Date(subscriber.lastOnline);
+            if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
+                throw new Error("Invalid timestamps");
+            }
+
+            // Calculate the difference in milliseconds
+            const difference = Math.abs(date1.getTime() - date2.getTime());
+
+            // Define the maximum allowed difference
+            const maxDifference = MAX_AUTOBOT_MINING_TIME_HOURS * 60 * 60 * 1000;
+
+            const differenceInMills =  Math.min(difference, maxDifference);
+
+            setLastOnlineDiff( differenceInMills / (60 * 1000)) // In minutes
+
+            if(firstOnMount) {
+                if (Math.floor(subscriber.currentAutoBotLevel.tokensPerHour / 60 * lastOnlineDiff) > 0) {
+                    setMinedTokensSheetIsOpen(true)
+                    setMinedTokens(Math.floor(subscriber.currentAutoBotLevel.tokensPerHour / 60 * lastOnlineDiff))
+                    setLastOnlineDiff(lastOnlineDiff)
+                }
+            }
+
             return () => {
                 clearInterval(interval);
             }
         }
     }, [subscriber]);
+
+    const updateSubscriberTokensWithMined = () => {
+        if (subscriber) {
+            setMinedTokensUpdateIsPending(true)
+            SubscriberService.updateSubscriberTokens(subscriber.user_id, subscriber.tokens + minedTokens).then(() => {
+                queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
+                    setMinedTokensUpdateIsPending(false)
+                    setMinedTokensSheetIsOpen(false)
+                    toast.success('Tokens received!')
+                })
+            })
+
+            setFirstOnMount(false)
+        }
+    }
+
+
+    // --- Before close effects (unMount)
+
+    useBeforeUnload(
+        React.useCallback(() => {
+            if (subscriber) {
+                SubscriberService.updateSubscriberLastOnline(subscriber.user_id, new Date())
+            }
+        }, [subscriber])
+    );
 
 
     return (
@@ -75,6 +142,28 @@ const App = () => {
                 </div>
                 <BottomNav/>
             </div>
+            <StyledSheet isOpen={minedTokensSheetIsOpen} onClose={() => setMinedTokensSheetIsOpen(false)} detent={'content-height'}
+                         className={`${minedTokensSheetIsOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-in-out`}>
+                <Sheet.Container>
+                    <Sheet.Header />
+                    <Sheet.Content>
+                        <div className="flex flex-col items-center text-white font-futuraRegular pb-8 text-center">
+
+                            <div className="text-3xl">Mined tokens 🦾</div>
+
+                            <div className="text-xl mt-4">While you were offline the AutoBot mined some tokens for you! </div>
+
+                            <Button
+                                text={"Collect " + minedTokens}
+                                style={"text-2xl self-center ml-0 mt-8 max-w-full text-center"}
+                                onClick={() => updateSubscriberTokensWithMined()}
+                                isPending={minedTokensUpdateIsPending}
+                            />
+                        </div>
+                    </Sheet.Content>
+                </Sheet.Container>
+                <Sheet.Backdrop/>
+            </StyledSheet>
         </HandleLoadingAndError>
     );
 };

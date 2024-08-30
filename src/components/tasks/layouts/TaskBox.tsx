@@ -100,13 +100,14 @@ const TaskBox = ({task} : {task: Task}) => {
                             <div className="flex flex-col items-center text-white font-futuraRegular pb-8">
 
                                 <div className="text-3xl">{task.title}</div>
-                                <Link
-                                    to={'https://t.me/GPTapcom'}
-                                    className="bg-[#E23969] w-[60px] h-[60px] rounded-[10px] grid place-items-center p-2 mt-8">
-                                    <img src={tgIcon} alt=""/>
+                                <Link to={task.link} className="flex items-center flex-col">
+                                    <img
+                                        className="bg-[#E23969] w-[60px] h-[60px] rounded-[10px] grid place-items-center p-2 mt-8"
+                                        src={tgIcon} alt=""/>
+                                    <div className="text-xl mt-2 opacity-80">Open {removeProtocol(task.link)}</div>
+
                                 </Link>
 
-                                <div className="text-xl mt-2 opacity-80">Open {removeProtocol(task.link)}</div>
 
                                 <div className="mt-4">
                                     {task.description}

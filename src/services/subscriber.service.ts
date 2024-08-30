@@ -45,6 +45,12 @@ class SubscriberService {
         ).then(res => res.data)
     }
 
+    async getAutoBotLevels() {
+        return axios.get(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/auto-bot-level`,
+        ).then(res => res.data)
+    }
+
     async getTasks(): Promise<Task[]> {
         return axios.get(
             import.meta.env.VITE_REACT_CLICKER_API_URL + `/task`
@@ -93,6 +99,30 @@ class SubscriberService {
                     telegramId: subscriberId
                 }
             )
+        )
+    }
+
+    async updateSubscriberAutoBotLevel(subscriberId: number, levelUpgradeCost: number) {
+        return axiosInstance.put(this.BASE_URL + "/remove-tokens", {
+            user_id: subscriberId,
+            tokensToRemove: levelUpgradeCost
+        }).then(() =>
+            axios.patch(
+                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/upgrade-auto-bot-level`,
+                {
+                    telegramId: subscriberId
+                }
+            )
+        )
+    }
+
+    async updateSubscriberLastOnline(subscriberId: number, lastOnline: Date) {
+        return axios.patch(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/update-last-online`,
+            {
+                telegramId: subscriberId,
+                lastOnline: lastOnline
+            }
         )
     }
 

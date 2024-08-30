@@ -16,11 +16,11 @@ const UpgradeButton: React.FC<UpgradeButtonProps> = (
     }) => {
 
     if (!nextLevel) {
-        return <Button isEnabled={false} text={"Max"}/>
+        return <Button isEnabled={false} text={"Max"} style={"self-end"}/>
     }
 
     if (isUpgradePending) {
-        return <Button isPending={true} text={"Upgrading..."}/>
+        return <Button isPending={true} text={"Upgrading..."} style={"self-end"}/>
     }
 
     return (
@@ -28,6 +28,7 @@ const UpgradeButton: React.FC<UpgradeButtonProps> = (
             onClick={() => enoughTokensForUpdate && updateLevel()}
             isEnabled={enoughTokensForUpdate}
             text={"Level Up"}
+            style={"self-end"}
         />
     )
 

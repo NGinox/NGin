@@ -24,7 +24,7 @@ export interface Subscriber {
 
 export interface ClickerSubscriber {
     telegramId: number;
-    maxEnergy: number;
+    lastOnline: Date;
     _id: number;
     currentLevel: {
         grade: number;
@@ -36,6 +36,11 @@ export interface ClickerSubscriber {
         maxEnergy: number;
         levelUpgradeCost: number;
     },
+    currentAutoBotLevel: {
+        grade: number;
+        tokensPerHour: number;
+        levelUpgradeCost: number;
+    }
     tasks: []
 }
 

@@ -3,6 +3,7 @@ import UpgradeMaxEnergyLevel from "./upgradeItems/UpgradeMaxEnergyLevel.tsx";
 import AnimatedLayout from "../AnimatedLayout.tsx";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
+import UpgradeAutoBotLevel from "./upgradeItems/UpgradeAutoBotLevel.tsx";
 const Upgrade = () => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>();
@@ -22,12 +23,17 @@ const Upgrade = () => {
                 <div className="grid grid-cols-1 gap-4 mt-6 pb-4">
 
                     <UpgradeTapLevel
-                        upgradeInfo={subscriber!.currentLevel}
-                        subscriberId={subscriber!.user_id}/>
+                        upgradeInfo={subscriber.currentLevel}
+                        subscriberId={subscriber.user_id}/>
 
                     <UpgradeMaxEnergyLevel
-                        upgradeInfo={subscriber!.currentMaxEnergyLevel}
-                        subscriberId={subscriber!.user_id}/>
+                        upgradeInfo={subscriber.currentMaxEnergyLevel}
+                        subscriberId={subscriber.user_id}/>
+
+                    <UpgradeAutoBotLevel
+                        upgradeInfo={subscriber.currentAutoBotLevel}
+                        subscriberId={subscriber.user_id}
+                    />
 
                 </div>
 

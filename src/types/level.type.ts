@@ -12,6 +12,12 @@ export interface MaxEnergyLevel {
 
 export interface Level {
     grade: number;
-    value: number;
+    value: number | string;
+    levelUpgradeCost: number;
+}
+
+export interface AutoBotLevel {
+    grade: number;
+    tokensPerHour: number;
     levelUpgradeCost: number;
 }

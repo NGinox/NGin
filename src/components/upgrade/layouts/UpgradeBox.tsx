@@ -7,7 +7,7 @@ interface UpgradeBoxProps {
     emoji: string;
     currentLevelGrade: number;
     nextLevel: null | Level;
-    upgradeCost: number;
+    upgradeCost: number | string;
     enoughTokensForUpdate: boolean;
     isUpgradePending: boolean;
     updateLevel: () => void;
@@ -24,7 +24,7 @@ const UpgradeBox: React.FC<UpgradeBoxProps> = (
     }) => {
     return (
         <div
-            className="bg-[#271732] shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] text-white p-4 rounded-xl flex flex-col gap-2 w-full">
+            className="bg-[#271732] shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] text-white p-4 rounded-xl flex flex-col gap-1 w-full">
             <div className="flex items-center gap-4">
                 <div className="bg-[#E23969] w-[40px] h-[40px] rounded-[10px] grid place-items-center">
                     <div className="text-2xl">{emoji}</div>
@@ -32,11 +32,11 @@ const UpgradeBox: React.FC<UpgradeBoxProps> = (
                 <div className="text-xl">{title}</div>
                 <div className="ml-auto opacity-60">{currentLevelGrade} Lvl</div>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-8">
 
                 <div>
                     {nextLevel && <div className="text-sm opacity-50"> Next Level: {nextLevel.value}</div>}
-                    {nextLevel && <div className="text-sm ">{upgradeCost} GPT Tokens</div>}
+                    {nextLevel && <div className="text-sm mt-2">{upgradeCost} GPT Tokens</div>}
                 </div>
 
 
@@ -45,7 +45,9 @@ const UpgradeBox: React.FC<UpgradeBoxProps> = (
                     nextLevel={nextLevel}
                     enoughTokensForUpdate={enoughTokensForUpdate}
                     isUpgradePending={isUpgradePending}
-                    updateLevel={updateLevel}/>
+                    updateLevel={updateLevel}
+
+                />
 
             </div>
         </div>

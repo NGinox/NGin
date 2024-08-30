@@ -53,7 +53,7 @@ const UpgradeMaxEnergyLevel: React.FC<UpgradeMaxEnergyLevel> = ({subscriberId, u
                 // Transform the object before returning
                 return {
                     grade: nextLevel.grade,
-                    value: nextLevel.maxEnergy,
+                    value: nextLevel.maxEnergy + " Max energy",
                     levelUpgradeCost: nextLevel.levelUpgradeCost,
                 };
             }
