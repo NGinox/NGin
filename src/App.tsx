@@ -9,12 +9,13 @@ import useAppStore from "./hooks/useAppStore.ts";
 import React, {useEffect, useState} from "react";
 import HandleLoadingAndError from "./components/HandleLoadingAndError.tsx";
 import toast, {Toaster} from "react-hot-toast";
-import {Outlet, useBeforeUnload} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import SubscriberService from "./services/subscriber.service.ts";
 import {Sheet} from "react-modal-sheet";
 import Button from "./ui/Button.tsx";
 import {StyledSheet} from "./ui/StyledSheet.tsx";
 import {useQueryClient} from "@tanstack/react-query";
+import useBeforeUnload from "./hooks/useBeforeUnload.tsx";
 const App = () => {
 
     // --- Get subscriber data before the launch of application ---
