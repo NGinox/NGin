@@ -27,8 +27,6 @@ const Upgrade = () => {
                         upgradeInfo={subscriber.currentLevel}
                         subscriberId={subscriber.user_id}/>
 
-                    <UpgradeBoxSkeleton/>
-
                     <UpgradeMaxEnergyLevel
                         upgradeInfo={subscriber.currentMaxEnergyLevel}
                         subscriberId={subscriber.user_id}/>
