@@ -25,7 +25,6 @@ const App = () => {
     const [minedTokensSheetIsOpen, setMinedTokensSheetIsOpen] = useState(false)
     const [minedTokensUpdateIsPending, setMinedTokensUpdateIsPending] = useState(false)
     const [minedTokens, setMinedTokens] = useState(0)
-    const [lastOnlineDiff, setLastOnlineDiff] = useState(0)
 
     const queryClient = useQueryClient()
 
@@ -61,27 +60,20 @@ const App = () => {
 
             useAppStore.getState().updateEnergy(getEnergy())
 
-            const date1 = new Date(Date.now());
-            const date2 = new Date(subscriber.lastOnline);
-            if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
-                throw new Error("Invalid timestamps");
-            }
+            // Tokens mining
 
-            // Calculate the difference in milliseconds
-            const difference = Math.abs(date1.getTime() - date2.getTime());
+            const currentTime = new Date(Date.now());
+            const lastOnlineTime = new Date(subscriber.lastOnline);
 
-            // Define the maximum allowed difference
+            const difference = Math.abs(currentTime.getTime() - lastOnlineTime.getTime());
             const maxDifference = MAX_AUTOBOT_MINING_TIME_HOURS * 60 * 60 * 1000;
+            const differenceInMinutes =  Math.min(difference, maxDifference) / (60 * 1000);
 
-            const differenceInMills =  Math.min(difference, maxDifference);
-
-            setLastOnlineDiff( differenceInMills / (60 * 1000)) // In minutes
-
-            if(firstOnMount) {
-                if (Math.floor(subscriber.currentAutoBotLevel.tokensPerHour / 60 * lastOnlineDiff) > 0) {
+            if (firstOnMount) {
+                if (Math.floor(subscriber.currentAutoBotLevel.tokensPerHour / 60 * differenceInMinutes) > 0) {
                     setMinedTokensSheetIsOpen(true)
-                    setMinedTokens(Math.floor(subscriber.currentAutoBotLevel.tokensPerHour / 60 * lastOnlineDiff))
-                    setLastOnlineDiff(lastOnlineDiff)
+                    setMinedTokens(Math.floor(subscriber.currentAutoBotLevel.tokensPerHour / 60 * differenceInMinutes))
+                    setFirstOnMount(false)
                 }
             }
 
@@ -90,6 +82,7 @@ const App = () => {
             }
         }
     }, [subscriber]);
+
 
     const updateSubscriberTokensWithMined = () => {
         if (subscriber) {
