@@ -15,6 +15,7 @@ import {Sheet} from "react-modal-sheet";
 import Button from "./ui/Button.tsx";
 import {StyledSheet} from "./ui/StyledSheet.tsx";
 import {useQueryClient} from "@tanstack/react-query";
+import {io} from "socket.io-client";
 const App = () => {
 
     // --- Get subscriber data before the launch of application ---
@@ -77,8 +78,11 @@ const App = () => {
                 }
             }
 
-            // TODO: Place this method on beforeunload of tg web app
-            SubscriberService.updateSubscriberLastOnline(subscriber.user_id, new Date())
+            // Logic that allow make onUnmount operations as tg web app don't recognize ny unmount events, the necessary data is sent on connection and in the server side on disconnect the actions are performed
+            const socket = io(import.meta.env.VITE_REACT_CLICKER_API_URL);
+            socket.on('connect', () => {
+                socket.emit('register', {subscriberId: subscriber.user_id});
+            });
 
             return () => {
                 clearInterval(interval);
