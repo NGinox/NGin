@@ -9,10 +9,10 @@ const useBeforeUnload = (callback: () => void) => {
             // event.returnValue = '';
         };
 
-        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('pagehide', handleBeforeUnload);
 
         return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('pagehide', handleBeforeUnload);
         };
     }, [callback]);
 };
