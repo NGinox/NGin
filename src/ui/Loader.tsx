@@ -1,4 +1,5 @@
 import {MutatingDots} from "react-loader-spinner";
+import colorfulRobot from "../images/colorful_robot.png"
 
 const Loader = () => {
     return (
@@ -15,6 +16,10 @@ const Loader = () => {
                 wrapperStyle={{}}
                 wrapperClass=""
             />
+
+            {/* Load image on loading to avoid flickering at ClickerLayout */}
+
+            <img src={colorfulRobot} className="absolute opacity-0" alt=""/>
         </div>
     )
 };

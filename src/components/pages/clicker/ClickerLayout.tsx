@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
-import {colorfulRobot, highVoltage} from "../../images";
+import {colorfulRobot, highVoltage, stats_graph} from "../../../images";
 import {NavLink} from "react-router-dom";
+import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
+import StatsSheet from "../../sheets/StatsSheet.tsx";
 
 
 interface ClickerViewProps {
+    subscriber: CombinedSubscriberData;
     isPressed: boolean;
     tokens: number;
     tokensPerClick: number;
@@ -13,7 +16,8 @@ interface ClickerViewProps {
     updateStateOnClick: (e: React.TouchEvent<HTMLDivElement>) => void;
 }
 const ClickerLayout: React.FC<ClickerViewProps> = (
-    {   isPressed,
+    {   subscriber,
+        isPressed,
         tokens,
         tokensPerClick,
         energyToReduce,
@@ -24,6 +28,7 @@ const ClickerLayout: React.FC<ClickerViewProps> = (
 
     const [clicks, setClicks] =
         useState<{ id: number, x: number, y: number }[]>([]);
+    const [isStatsSheetOpen, setIsStatsSheetOpen] = useState(false)
 
     const handleAnimationEnd = (id: number) => {
         setClicks((prevClicks) => prevClicks.filter(click => click.id !== id));
@@ -50,16 +55,23 @@ const ClickerLayout: React.FC<ClickerViewProps> = (
         <div className="h-full w-full z-10 flex flex-col items-center text-white flex-grow">
 
             {/*Coin*/}
-            <div className="flex-grow flex flex-col items-center">
+            <div className="flex-grow flex flex-col items-center w-full relative">
                 <div className="text-5xl font-bold flex items-center">
                     <span className="mt-12"
                           style={{fontFamily: "Futura"}}>{formatNumberWithSpaces(Number(tokens.toFixed(1)))}</span>
+                </div>
+                <div
+                    onClick={() => setIsStatsSheetOpen(true)}
+                    className="absolute right-0 top-0 flex flex-col items-center bg-[#E23969] p-2 pl-4 pr-4 rounded-xl border-[#E23969]">
+                    <img
+                        src={stats_graph}
+                        className="h-6 w-6 text-[#E23969]" alt=""/>
                 </div>
                 <div className="relative flex mt-4 flex-grow items-center" onTouchStart={onHandleClick}>
                     <div
                         style={isPressed ? {transform: 'scale(0.95)'} : {transform: 'scale(1)'}}
                         className="rounded-full border-8 border-[#f3c45a] shadow-[0_0_15px_5px_rgba(252,204,75,1)] transform transition-transform duration-100">
-                        <img src={colorfulRobot} width={256} height={256} alt="notcoin" className=""/>
+                        <img fetchPriority={"high"} src={colorfulRobot} width={256} height={256} alt="notcoin" className=""/>
                     </div>
                     {clicks.map((click) => (
                         <div
@@ -76,6 +88,8 @@ const ClickerLayout: React.FC<ClickerViewProps> = (
                     ))}
                 </div>
             </div>
+
+            <StatsSheet isOpen={isStatsSheetOpen} setIsOpen={setIsStatsSheetOpen} subscriber={subscriber}/>
 
             {/* Energy bar */}
             <div className="w-full pb-4 z-10 flex flex-col gap-4">

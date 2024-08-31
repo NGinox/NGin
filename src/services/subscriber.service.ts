@@ -74,6 +74,21 @@ class SubscriberService {
         })
     }
 
+    async syncSubscriberData(subscriberId: number, tokens: number, energy: number) {
+        await axiosInstance.post(this.BASE_URL + "/update-tokens", {
+            user_id: subscriberId,
+            tokens: tokens
+        }).then(() => {
+            axios.patch(
+                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/update-energy`,
+                {
+                    telegramId: subscriberId,
+                    energy: energy
+                }
+            )
+        })
+    }
+
     async updateClickerLevel(subscriberId: number, levelUpgradeCost: number) {
         return axiosInstance.put(this.BASE_URL + "/remove-tokens", {
             user_id: subscriberId,

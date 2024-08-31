@@ -1,10 +1,10 @@
 import ClickerLayout from "./ClickerLayout.tsx";
 import React, {useEffect, useRef, useState} from "react";
-import SubscriberService from "../../services/subscriber.service.ts";
-import {DELAY_OF_TOKENS_SYNC} from "../../constants/constants.ts";
-import useAppStore from "../../hooks/useAppStore.ts";
+import SubscriberService from "../../../services/subscriber.service.ts";
+import {DELAY_OF_TOKENS_SYNC} from "../../../constants/constants.ts";
+import useAppStore from "../../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
-import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
+import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
 
 const Clicker = () => {
 
@@ -36,7 +36,7 @@ const Clicker = () => {
 
         timerRef.current = window.setTimeout(() => {
             if (subscriber) {
-                SubscriberService.updateSubscriberTokens(subscriber.user_id, Number(tokens.toFixed(1)));
+                SubscriberService.syncSubscriberData(subscriber.user_id, Number(tokens.toFixed(1)), energy);
             }
         }, DELAY_OF_TOKENS_SYNC);
 
@@ -64,14 +64,11 @@ const Clicker = () => {
             decreaseEnergy(energyToReduce)
             updateTokens(tokens + tokensPerClick * touchesCount)
         }
-
-        // TODO: Perform the saving of this data on app close
-        localStorage.setItem("energy", useAppStore.getState().energy.toString())
-        localStorage.setItem("exitAppTime", Date.now().toString())
     };
 
     return (
         <ClickerLayout
+            subscriber={subscriber}
             tokens={tokens}
             energy={energy}
             maxEnergy={maxEnergy}
@@ -79,8 +76,6 @@ const Clicker = () => {
             energyToReduce={energyToReduce}
             isPressed={isPressed}
             updateStateOnClick={(e: React.TouchEvent<HTMLDivElement>) => updateStateOnClick(e)}/>
-
-
     );
 };
 

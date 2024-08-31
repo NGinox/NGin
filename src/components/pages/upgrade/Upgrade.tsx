@@ -1,8 +1,8 @@
 import UpgradeTapLevel from "./upgradeItems/UpgradeTapLevel.tsx";
 import UpgradeMaxEnergyLevel from "./upgradeItems/UpgradeMaxEnergyLevel.tsx";
-import AnimatedLayout from "../AnimatedLayout.tsx";
+import AnimatedLayout from "../../../ui/animation/AnimatedLayout.tsx";
 import {useOutletContext} from "react-router-dom";
-import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
+import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
 import UpgradeAutoBotLevel from "./upgradeItems/UpgradeAutoBotLevel.tsx";
 const Upgrade = () => {
 

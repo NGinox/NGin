@@ -1,21 +1,21 @@
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import useAppStore from "../../../hooks/useAppStore.ts";
-import {AutoBotLevel, Level} from "../../../types/level.type.ts";
-import SubscriberService from "../../../services/subscriber.service.ts";
-import React, {useState} from "react";
-import UpgradeBoxSkeleton from "../layouts/UpgradeBoxSkeleton.tsx";
 import UpgradeBox from "../layouts/UpgradeBox.tsx";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {Level, TapLevel} from "../../../../types/level.type.ts";
+import SubscriberService from "../../../../services/subscriber.service.ts";
+import React, {useState} from "react";
+import useAppStore from "../../../../hooks/useAppStore.ts";
+import UpgradeBoxSkeleton from "../layouts/UpgradeBoxSkeleton.tsx";
 import toast from "react-hot-toast";
 
-interface UpgradeAutoBotLevel {
+interface UpgradeTapLevel {
     subscriberId: number;
     upgradeInfo: {
         grade: number,
-        tokensPerHour: number;
+        tokensPerClick: number;
         levelUpgradeCost: number;
     }
 }
-const UpgradeAutoBotLevel: React.FC<UpgradeAutoBotLevel> = ({subscriberId, upgradeInfo}) => {
+const UpgradeTapLevel: React.FC<UpgradeTapLevel> = ({upgradeInfo, subscriberId}) => {
 
     const [isUpgradePending, setIsUpgradePending] = useState(false)
 
@@ -24,20 +24,20 @@ const UpgradeAutoBotLevel: React.FC<UpgradeAutoBotLevel> = ({subscriberId, upgra
         tokens: state.tokens,
     }))
 
-    const {data: levels, isLoading, isError} = useQuery<AutoBotLevel[]>({
-        queryKey: ['autoBotLevels'],
-        queryFn: () => SubscriberService.getAutoBotLevels()
+    const {data: levels, isLoading, isError} = useQuery<TapLevel[]>({
+        queryKey: ['levels'],
+        queryFn: () => SubscriberService.getClickerLevels()
     })
 
     const updateLevelMutation = useMutation({
         mutationFn: () => {
             setIsUpgradePending(true)
-            return SubscriberService.updateSubscriberAutoBotLevel(subscriberId, upgradeInfo.levelUpgradeCost)
+            return SubscriberService.updateClickerLevel(subscriberId, upgradeInfo.levelUpgradeCost)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
-                setIsUpgradePending(false)
                 toast.success('Level Upgraded!')
+                setIsUpgradePending(false)
             })
         },
     })
@@ -53,7 +53,7 @@ const UpgradeAutoBotLevel: React.FC<UpgradeAutoBotLevel> = ({subscriberId, upgra
                 // Transform the object before returning
                 return {
                     grade: nextLevel.grade,
-                    value: nextLevel.tokensPerHour + " tokens per hour for 3 hours after last online",
+                    value: nextLevel.tokensPerClick + " tokens per click",
                     levelUpgradeCost: nextLevel.levelUpgradeCost,
                 };
             }
@@ -72,8 +72,8 @@ const UpgradeAutoBotLevel: React.FC<UpgradeAutoBotLevel> = ({subscriberId, upgra
 
     return (
         <UpgradeBox
-            title={'Auto bot'}
-            emoji={'🦾'}
+            title={'Tokens per click'}
+            emoji={'☝️'}
             currentLevelGrade={upgradeInfo.grade}
             nextLevel={getNextLevel()}
             upgradeCost={upgradeInfo.levelUpgradeCost}
@@ -83,4 +83,4 @@ const UpgradeAutoBotLevel: React.FC<UpgradeAutoBotLevel> = ({subscriberId, upgra
     );
 };
 
-export default UpgradeAutoBotLevel
+export default UpgradeTapLevel;

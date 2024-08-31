@@ -1,5 +1,5 @@
 import React from 'react';
-import {Level} from "../../../types/level.type.ts";
+import {Level} from "../../../../types/level.type.ts";
 import UpgradeButton from "./UpgradeButton.tsx";
 
 interface UpgradeBoxProps {

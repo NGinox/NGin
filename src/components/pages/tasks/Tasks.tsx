@@ -1,6 +1,7 @@
-import TaskBox from "./layouts/TaskBox.tsx";
 import {useOutletContext} from "react-router-dom";
-import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
+import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
+import TaskItem from "./TaskItem.tsx";
+import TaskReferral from "./TaskReferral.tsx";
 
 const Tasks = () => {
 
@@ -19,8 +20,10 @@ const Tasks = () => {
             </div>
             <div className="grid grid-cols-1 gap-4 mt-6 pb-4">
 
+                <TaskReferral/>
+
                 {
-                    subscriber.tasks?.map(task => <TaskBox task={task}/>)
+                    subscriber.tasks?.map(task => <TaskItem task={task}/>)
                 }
 
             </div>

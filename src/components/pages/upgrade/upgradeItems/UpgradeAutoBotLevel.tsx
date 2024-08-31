@@ -1,21 +1,21 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import useAppStore from "../../../hooks/useAppStore.ts";
-import {Level, MaxEnergyLevel} from "../../../types/level.type.ts";
-import SubscriberService from "../../../services/subscriber.service.ts";
+import useAppStore from "../../../../hooks/useAppStore.ts";
+import {AutoBotLevel, Level} from "../../../../types/level.type.ts";
+import SubscriberService from "../../../../services/subscriber.service.ts";
 import React, {useState} from "react";
 import UpgradeBoxSkeleton from "../layouts/UpgradeBoxSkeleton.tsx";
 import UpgradeBox from "../layouts/UpgradeBox.tsx";
 import toast from "react-hot-toast";
 
-interface UpgradeMaxEnergyLevel {
+interface UpgradeAutoBotLevel {
     subscriberId: number;
     upgradeInfo: {
         grade: number,
-        maxEnergy: number;
+        tokensPerHour: number;
         levelUpgradeCost: number;
     }
 }
-const UpgradeMaxEnergyLevel: React.FC<UpgradeMaxEnergyLevel> = ({subscriberId, upgradeInfo}) => {
+const UpgradeAutoBotLevel: React.FC<UpgradeAutoBotLevel> = ({subscriberId, upgradeInfo}) => {
 
     const [isUpgradePending, setIsUpgradePending] = useState(false)
 
@@ -24,15 +24,15 @@ const UpgradeMaxEnergyLevel: React.FC<UpgradeMaxEnergyLevel> = ({subscriberId, u
         tokens: state.tokens,
     }))
 
-    const {data: levels, isLoading, isError} = useQuery<MaxEnergyLevel[]>({
-        queryKey: ['maxEnergyLevels'],
-        queryFn: () => SubscriberService.getMaxEnergyLevels()
+    const {data: levels, isLoading, isError} = useQuery<AutoBotLevel[]>({
+        queryKey: ['autoBotLevels'],
+        queryFn: () => SubscriberService.getAutoBotLevels()
     })
 
     const updateLevelMutation = useMutation({
         mutationFn: () => {
             setIsUpgradePending(true)
-            return SubscriberService.updateSubscriberMaxEnergy(subscriberId, upgradeInfo.levelUpgradeCost)
+            return SubscriberService.updateSubscriberAutoBotLevel(subscriberId, upgradeInfo.levelUpgradeCost)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
@@ -53,7 +53,7 @@ const UpgradeMaxEnergyLevel: React.FC<UpgradeMaxEnergyLevel> = ({subscriberId, u
                 // Transform the object before returning
                 return {
                     grade: nextLevel.grade,
-                    value: nextLevel.maxEnergy + " Max energy",
+                    value: nextLevel.tokensPerHour + " tokens per hour for 3 hours after last online",
                     levelUpgradeCost: nextLevel.levelUpgradeCost,
                 };
             }
@@ -72,8 +72,8 @@ const UpgradeMaxEnergyLevel: React.FC<UpgradeMaxEnergyLevel> = ({subscriberId, u
 
     return (
         <UpgradeBox
-            title={'Max energy'}
-            emoji={'⚡'}
+            title={'Auto bot'}
+            emoji={'🦾'}
             currentLevelGrade={upgradeInfo.grade}
             nextLevel={getNextLevel()}
             upgradeCost={upgradeInfo.levelUpgradeCost}
@@ -83,4 +83,4 @@ const UpgradeMaxEnergyLevel: React.FC<UpgradeMaxEnergyLevel> = ({subscriberId, u
     );
 };
 
-export default UpgradeMaxEnergyLevel
+export default UpgradeAutoBotLevel

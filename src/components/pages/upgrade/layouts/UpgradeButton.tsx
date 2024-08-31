@@ -1,6 +1,6 @@
-import {Level} from "../../../types/level.type.ts";
+import {Level} from "../../../../types/level.type.ts";
 import React from "react";
-import Button from "../../../ui/Button.tsx";
+import Button from "../../../../ui/Button.tsx";
 
 interface UpgradeButtonProps {
     nextLevel: null | Level;

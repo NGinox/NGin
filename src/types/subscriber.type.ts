@@ -1,3 +1,5 @@
+import {Task} from "./task.type.ts";
+
 export interface Subscriber {
     chat_id: number;
     user_id: number;
@@ -24,6 +26,8 @@ export interface Subscriber {
 
 export interface ClickerSubscriber {
     telegramId: number;
+    savedEnergy: number;
+    savedEnergyTimestamp: Date;
     lastOnline: Date;
     _id: number;
     currentLevel: {
@@ -41,8 +45,10 @@ export interface ClickerSubscriber {
         tokensPerHour: number;
         levelUpgradeCost: number;
     }
-    tasks: []
+    tasks: Task[]
 }
+
+
 
 
 export interface CombinedSubscriberData extends Subscriber, ClickerSubscriber {}

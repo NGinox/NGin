@@ -1,21 +1,21 @@
-import UpgradeBox from "../layouts/UpgradeBox.tsx";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {Level, TapLevel} from "../../../types/level.type.ts";
-import SubscriberService from "../../../services/subscriber.service.ts";
+import useAppStore from "../../../../hooks/useAppStore.ts";
+import {Level, MaxEnergyLevel} from "../../../../types/level.type.ts";
+import SubscriberService from "../../../../services/subscriber.service.ts";
 import React, {useState} from "react";
-import useAppStore from "../../../hooks/useAppStore.ts";
 import UpgradeBoxSkeleton from "../layouts/UpgradeBoxSkeleton.tsx";
+import UpgradeBox from "../layouts/UpgradeBox.tsx";
 import toast from "react-hot-toast";
 
-interface UpgradeTapLevel {
+interface UpgradeMaxEnergyLevel {
     subscriberId: number;
     upgradeInfo: {
         grade: number,
-        tokensPerClick: number;
+        maxEnergy: number;
         levelUpgradeCost: number;
     }
 }
-const UpgradeTapLevel: React.FC<UpgradeTapLevel> = ({upgradeInfo, subscriberId}) => {
+const UpgradeMaxEnergyLevel: React.FC<UpgradeMaxEnergyLevel> = ({subscriberId, upgradeInfo}) => {
 
     const [isUpgradePending, setIsUpgradePending] = useState(false)
 
@@ -24,20 +24,20 @@ const UpgradeTapLevel: React.FC<UpgradeTapLevel> = ({upgradeInfo, subscriberId})
         tokens: state.tokens,
     }))
 
-    const {data: levels, isLoading, isError} = useQuery<TapLevel[]>({
-        queryKey: ['levels'],
-        queryFn: () => SubscriberService.getClickerLevels()
+    const {data: levels, isLoading, isError} = useQuery<MaxEnergyLevel[]>({
+        queryKey: ['maxEnergyLevels'],
+        queryFn: () => SubscriberService.getMaxEnergyLevels()
     })
 
     const updateLevelMutation = useMutation({
         mutationFn: () => {
             setIsUpgradePending(true)
-            return SubscriberService.updateClickerLevel(subscriberId, upgradeInfo.levelUpgradeCost)
+            return SubscriberService.updateSubscriberMaxEnergy(subscriberId, upgradeInfo.levelUpgradeCost)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
-                toast.success('Level Upgraded!')
                 setIsUpgradePending(false)
+                toast.success('Level Upgraded!')
             })
         },
     })
@@ -53,7 +53,7 @@ const UpgradeTapLevel: React.FC<UpgradeTapLevel> = ({upgradeInfo, subscriberId})
                 // Transform the object before returning
                 return {
                     grade: nextLevel.grade,
-                    value: nextLevel.tokensPerClick + " tokens per click",
+                    value: nextLevel.maxEnergy + " Max energy",
                     levelUpgradeCost: nextLevel.levelUpgradeCost,
                 };
             }
@@ -72,8 +72,8 @@ const UpgradeTapLevel: React.FC<UpgradeTapLevel> = ({upgradeInfo, subscriberId})
 
     return (
         <UpgradeBox
-            title={'Tokens per click'}
-            emoji={'☝️'}
+            title={'Max energy'}
+            emoji={'⚡'}
             currentLevelGrade={upgradeInfo.grade}
             nextLevel={getNextLevel()}
             upgradeCost={upgradeInfo.levelUpgradeCost}
@@ -83,4 +83,4 @@ const UpgradeTapLevel: React.FC<UpgradeTapLevel> = ({upgradeInfo, subscriberId})
     );
 };
 
-export default UpgradeTapLevel;
+export default UpgradeMaxEnergyLevel
