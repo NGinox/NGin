@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import copySvg from '../../../images/copy.svg'
 import BottomSheet from "../../../ui/BottomSheet.tsx";
 import '../../../App.css'
+import {initUtils} from "@tma.js/sdk";
 
 const TaskReferral = () => {
 
@@ -26,10 +27,10 @@ const TaskReferral = () => {
             })
     }
 
-    /*const handleShareInviteLink = () => {
+    const handleShareInviteLink = () => {
         const utils = initUtils()
-        utils.openLink(inviteLinkTelegramShare)
-    }*/
+        utils.openTelegramLink(inviteLinkTelegramShare)
+    }
 
     return (
         <div
@@ -70,7 +71,7 @@ const TaskReferral = () => {
                                 <Button
                                     text={"Send to fren"}
                                     style={"text-2xl self-center ml-0 max-w-full text-center w-full"}
-                                    onClick={() => window.open(inviteLinkTelegramShare)}
+                                    onClick={handleShareInviteLink}
                                     isPending={false}
                                 />
                             </div>
