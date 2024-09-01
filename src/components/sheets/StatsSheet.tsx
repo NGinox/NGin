@@ -1,7 +1,8 @@
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 import BottomSheet from "../../ui/BottomSheet.tsx";
+import {Dispatch, SetStateAction} from "react";
 
-const StatsSheet = ({isOpen, setIsOpen, subscriber} : {isOpen: boolean, setIsOpen: (value: boolean) => void, subscriber: CombinedSubscriberData}) => {
+const StatsSheet = ({isOpen, setIsOpen, subscriber} : {isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>, subscriber: CombinedSubscriberData}) => {
 
     const completedTasks = subscriber.tasks.filter(task => task.completed)
 
@@ -20,12 +21,14 @@ const StatsSheet = ({isOpen, setIsOpen, subscriber} : {isOpen: boolean, setIsOpe
                         <div>Max energy:</div>
                         <div>Tokens per hour:</div>
                         <div>Completed tasks:</div>
+                        <div>Referrals:</div>
                     </div>
                     <div className="flex flex-col items-start ml-12">
                         <div>{subscriber.currentLevel.tokensPerClick} ({subscriber.currentLevel.grade} Lvl)</div>
                         <div>{subscriber.currentMaxEnergyLevel.maxEnergy} ({subscriber.currentMaxEnergyLevel.grade} Lvl)</div>
                         <div>{subscriber.currentAutoBotLevel.tokensPerHour} ({subscriber.currentAutoBotLevel.grade} Lvl)</div>
                         <div>{completedTasks.length}/{subscriber.tasks.length}</div>
+                        <div>{subscriber.referrals.length}</div>
                     </div>
                 </div>
 

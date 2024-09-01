@@ -13,6 +13,7 @@ import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import {initializeWebsocket} from "./services/websocket.service.ts";
+import ReferralHandler from "./hooks/ReferralHandler.tsx";
 const App = () => {
 
     // --- Get subscriber data on launch ---
@@ -64,6 +65,7 @@ const App = () => {
                 <BottomNav/>
             </div>
             <MinedTokensSheet subscriber={subscriber}/>
+            <ReferralHandler subscriber={subscriber}/>
         </div>
 
     );

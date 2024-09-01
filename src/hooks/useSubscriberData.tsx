@@ -36,6 +36,7 @@ const useSubscriberData = () => {
             })
         } else {
             // For local testing
+            console.log(import.meta.env.VITE_REACT_DEFAULT_USER_ID)
             useAppStore.getState().updateUserId(import.meta.env.VITE_REACT_DEFAULT_USER_ID)
             setSubscriberId(import.meta.env.VITE_REACT_DEFAULT_USER_ID);
         }
