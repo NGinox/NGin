@@ -8,6 +8,7 @@ import {REWARD_PARENT_REFERRAL, REWARD_REFERRAL} from "../constants/constants.ts
 import toast from "react-hot-toast";
 import Button from "../ui/Button.tsx";
 import '../App.css'
+import WebApp from "@twa-dev/sdk";
 
 const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) => {
     const location = useLocation();
@@ -66,13 +67,14 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
         else {
             if (subscriber.myReferral === 0) { // no referral
                 const getQueryParams = () => {
-                    const queryParams = new URLSearchParams(location.search);
-                    const parentReferralId = queryParams.get('startapp');
-                    if (parentReferralId) {
-                        addReferralMutation.mutate(Number(parentReferralId))
-                        toast.success('startapp')
 
-                    } else {
+                    const startParam = WebApp.initDataUnsafe.start_param
+                    if (startParam) {
+                        addReferralMutation.mutate(Number(startParam))
+                        toast.success('startapp')
+                    }
+
+                    else {
                         toast.error('No startapp')
                     }
                 };
