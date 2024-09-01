@@ -41,6 +41,11 @@ const Clicker = () => {
             }
         }, DELAY_OF_TOKENS_SYNC);
 
+        socket.emit('sync', {
+            energy: energy,
+            tokens: tokens
+        })
+
     }, [tokens, subscriber]);
 
     const updateStateOnClick = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
@@ -64,11 +69,6 @@ const Clicker = () => {
             decreaseEnergy(energyToReduce)
             updateTokens(tokens + tokensPerClick * touchesCount)
         }
-
-        socket.emit('sync', {
-            energy: energy,
-            tokens: tokens
-        })
     };
 
     return (

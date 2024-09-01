@@ -45,7 +45,10 @@ const App = () => {
             const interval = setInterval(() => {
                 if (useAppStore.getState().energy < maxEnergy) {
                     useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
-                    socket.emit('syncEnergy', {energy: useAppStore.getState().energy})
+                    socket.emit('sync', {
+                        energy: useAppStore.getState().energy,
+                        tokens: useAppStore.getState().tokens
+                    })
                 }
             }, DELAY_OF_INCREASING_OF_ENERGY);
 

@@ -4,7 +4,7 @@ import useAppStore from "../../../hooks/useAppStore.ts";
 import WebApp from "@twa-dev/sdk";
 const Store = () => {
     return (
-        <div className="flex-1 flex flex-col">
+        <div className="flex flex-col">
             <div className="text-3xl pb-4 text-center">Welcome to the store!</div>
             <div className="text-xs text-center font-futuraRegular">
                 <span className="text-sm">Here you can buy GPT Tokens for Telegram Stars</span>
