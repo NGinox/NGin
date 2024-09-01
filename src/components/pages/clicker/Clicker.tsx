@@ -65,7 +65,10 @@ const Clicker = () => {
             updateTokens(tokens + tokensPerClick * touchesCount)
         }
 
-        socket.emit('syncEnergy', {energy: energy})
+        socket.emit('sync', {
+            energy: energy,
+            tokens: tokens
+        })
     };
 
     return (
