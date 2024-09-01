@@ -17,8 +17,8 @@ const TaskReferral = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [copiedToClipboard, setCopiedToClipboard] = useState(false)
 
-    const inviteLinkTelegramShare = `https://t.me/share/url?url=${encodeURIComponent(`https://t.me/GPTapBot/TapToAsk?startApp=${subscriber.user_id}`)}&text=${encodeURIComponent("Join GPT Tap Bot! It's awesome!")}`
-    const inviteLink = `https://t.me/GPTapBot/TapToAsk?startApp=${subscriber.user_id}`
+    const inviteLinkTelegramShare = `https://t.me/share/url?url=${encodeURIComponent(`https://t.me/GPTapBot/TapToAsk/start?startapp=${subscriber.user_id}`)}&text=${encodeURIComponent("Join GPT Tap Bot! It's awesome!")}`
+    const inviteLink = `https://t.me/GPTapBot/TapToAsk/start?startapp=${subscriber.user_id}`
 
     const copyInviteLink = () => {
         navigator.clipboard.writeText(inviteLink)
