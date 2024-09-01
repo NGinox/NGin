@@ -5,6 +5,7 @@ import WebApp from "@twa-dev/sdk";
 import useAppStore from "./useAppStore.ts";
 import {CombinedSubscriberData} from "../types/subscriber.type.ts";
 import { EventNames } from '@twa-dev/types';
+import toast from "react-hot-toast";
 
 const useSubscriberData = () => {
     const [subscriberId, setSubscriberId] = useState<number | null >(null);
@@ -29,6 +30,7 @@ const useSubscriberData = () => {
             WebApp.setHeaderColor("#000");
             WebApp.setBackgroundColor("#271732");
             WebApp.disableVerticalSwipes()
+            toast.error(WebApp.initDataUnsafe.start_param || "No start param")
             WebApp.onEvent("web_app_close" as EventNames, () => {
                 if (subscriber) {
                     SubscriberService.updateSubscriberLastOnline(subscriber.user_id, new Date())
