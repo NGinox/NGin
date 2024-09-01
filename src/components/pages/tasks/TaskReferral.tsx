@@ -14,12 +14,11 @@ const TaskReferral = () => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>()
 
-
     const [isOpen, setIsOpen] = useState(false)
     const [copiedToClipboard, setCopiedToClipboard] = useState(false)
 
-    const inviteLinkTelegramShare = `https://t.me/share/url?url=${encodeURIComponent(`https://t.me/GPTapBot?startApp=${subscriber.user_id}`)}&text=${encodeURIComponent("Join GPT Tap Bot! It's awesome!")}`
-    const inviteLink = `https://t.me/GPTapBot?startApp=${subscriber.user_id}`
+    const inviteLinkTelegramShare = `https://t.me/share/url?url=${encodeURIComponent(`https://t.me/GPTapBot/TapToAsk?startApp=${subscriber.user_id}`)}&text=${encodeURIComponent("Join GPT Tap Bot! It's awesome!")}`
+    const inviteLink = `https://t.me/GPTapBot/TapToAsk?startApp=${subscriber.user_id}`
 
     const copyInviteLink = () => {
         navigator.clipboard.writeText(inviteLink)
@@ -47,19 +46,14 @@ const TaskReferral = () => {
                 <div className="flex-1 flex flex-col">
                     <div>Invite frens</div>
                 </div>
-
                 <Button text={"Invite"} onClick={() => setIsOpen(true)}/>
-
                 <BottomSheet isOpen={isOpen} setIsOpen={setIsOpen}>
                     <div className="flex flex-col items-center text-white font-futuraRegular pb-8">
                         <div className="text-3xl">Invite frens</div>
                         <div className="text-center mt-2">
                             We hope you have some friends, because in that case you can share GPTap and receive a bonus!
                         </div>
-                        <div
-                            className="rounded-3xl flex flex-col items-center p-2 pr-8 pl-8 pb-6 mt-8 w-full animatedBackground"
-
-                        >
+                        <div className="rounded-3xl flex flex-col items-center p-2 pr-8 pl-8 pb-6 mt-8 w-full animatedBackground">
                             <div className="p-2 bg-white rounded-xl mt-2 animate-pulse">
                                 <img src={giftBox} alt={''} className="h-[32px] w-[32px]"/>
                             </div>
@@ -86,11 +80,8 @@ const TaskReferral = () => {
                         </div>
                     </div>
                 </BottomSheet>
-
-
             </div>
         </div>
-
     );
 };
 

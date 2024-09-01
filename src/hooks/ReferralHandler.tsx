@@ -67,15 +67,9 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
         else {
             if (subscriber.myReferral === 0) { // no referral
                 const getQueryParams = () => {
-
                     const startParam = WebApp.initDataUnsafe.start_param
                     if (startParam) {
                         addReferralMutation.mutate(Number(startParam))
-                        toast.success('startapp')
-                    }
-
-                    else {
-                        toast.error('No startapp')
                     }
                 };
                 getQueryParams();
@@ -91,7 +85,9 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
                 {isReferral
                     ?
                     <div className="flex flex-col items-center">
-                        <div className="text-3xl">Get referral bonus</div>
+                        <div className="text-3xl">
+                            Get referral bonus
+                        </div>
                         <div className="text-center mt-2">
                             Your friend really likes our app so he decided to share it with you and now you get a bonus!
                         </div>
