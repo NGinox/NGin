@@ -12,7 +12,7 @@ import '../App.css'
 const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) => {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false)
-    const [reward, setReward] = useState(null)
+    const [reward, setReward] = useState(0)
     const [isReferral, setIsReferral] = useState(true)
 
     const [isPending, setIsPending] = useState(false)
@@ -20,7 +20,7 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
     const queryClient = useQueryClient()
 
     const addReferralMutation = useMutation({
-        mutationFn: (parentReferralId) => SubscriberService.addReferral(parentReferralId, subscriber.user_id),
+        mutationFn: (parentReferralId: number) => SubscriberService.addReferral(parentReferralId, subscriber.user_id),
         onSuccess: () => {
             setReward(REWARD_REFERRAL)
             setIsOpen(true)
@@ -30,8 +30,7 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
     const updateTokensForReferral = useMutation({
         mutationFn: () => {
             setIsPending(true)
-            console.log('subscriber tokens', subscriber.tokens, ' reward', REWARD_REFERRAL)
-            SubscriberService.updateSubscriberTokens(subscriber.user_id, subscriber.tokens + REWARD_REFERRAL)
+            return SubscriberService.updateSubscriberTokens(subscriber.user_id, subscriber.tokens + REWARD_REFERRAL)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
@@ -44,7 +43,7 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
     const getParentReferralRewardMutation = useMutation({
         mutationFn: () => {
             setIsPending(true)
-            SubscriberService.getReferralReward(subscriber.user_id, subscriber.tokens + reward)
+            return SubscriberService.getReferralReward(subscriber.user_id, subscriber.tokens + reward)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['subscriber']}).then(() => {
