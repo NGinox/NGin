@@ -1,5 +1,5 @@
 import {Sheet} from "react-modal-sheet";
-import {ReactElement} from "react";
+import {Dispatch, ReactElement, SetStateAction} from "react";
 import {styled} from "styled-components";
 import '../App.css'
 
@@ -27,7 +27,7 @@ const StyledSheet = styled(Sheet)`
 
 interface BottomSheetProps {
     isOpen: boolean;
-    setIsOpen: () => void;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
     disableDrag?: boolean;
     children: ReactElement
 }
@@ -47,7 +47,6 @@ const BottomSheet = (
         })
 
     }
-
 
     return (
             <StyledSheet isOpen={isOpen}

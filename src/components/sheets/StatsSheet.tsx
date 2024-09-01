@@ -1,7 +1,8 @@
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
 import BottomSheet from "../../ui/BottomSheet.tsx";
+import {Dispatch, SetStateAction} from "react";
 
-const StatsSheet = ({isOpen, setIsOpen, subscriber} : {isOpen: boolean, setIsOpen: (value: boolean) => void, subscriber: CombinedSubscriberData}) => {
+const StatsSheet = ({isOpen, setIsOpen, subscriber} : {isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>, subscriber: CombinedSubscriberData}) => {
 
     const completedTasks = subscriber.tasks.filter(task => task.completed)
 
