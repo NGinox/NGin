@@ -5,6 +5,7 @@ import {DELAY_OF_TOKENS_SYNC} from "../../../constants/constants.ts";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
+import {socket} from "../../../App.tsx";
 
 const Clicker = () => {
 
@@ -42,7 +43,6 @@ const Clicker = () => {
 
     }, [tokens, subscriber]);
 
-
     const updateStateOnClick = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
         if (energyToReduce - energyToReduce < 0) {
             return;
@@ -64,6 +64,11 @@ const Clicker = () => {
             decreaseEnergy(energyToReduce)
             updateTokens(tokens + tokensPerClick * touchesCount)
         }
+
+        socket.emit('sync', {
+            energy: energy,
+            tokens: tokens
+        })
     };
 
     return (
