@@ -70,6 +70,10 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
                     const parentReferralId = queryParams.get('startapp');
                     if (parentReferralId) {
                         addReferralMutation.mutate(Number(parentReferralId))
+                        toast.success('startapp')
+
+                    } else {
+                        toast.error('No startapp')
                     }
                 };
                 getQueryParams();
@@ -86,10 +90,8 @@ const ReferralHandler = ({subscriber} : {subscriber: CombinedSubscriberData}) =>
                     ?
                     <div className="flex flex-col items-center">
                         <div className="text-3xl">Get referral bonus</div>
-                        <div className="text-center mt-2">Your friend really likes our app so he decided to share it
-                            with
-                            you and now you
-                            get a bonus!
+                        <div className="text-center mt-2">
+                            Your friend really likes our app so he decided to share it with you and now you get a bonus!
                         </div>
                         <div className="animatedBackground p-2 pl-4 pr-4 text-xl rounded-xl mt-4">
                             + {reward} GPT Tokens
