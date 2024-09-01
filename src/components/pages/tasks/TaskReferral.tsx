@@ -7,14 +7,19 @@ import copySvg from '../../../images/copy.svg'
 import BottomSheet from "../../../ui/BottomSheet.tsx";
 import '../../../App.css'
 import {initUtils} from "@tma.js/sdk";
+import {useOutletContext} from "react-router-dom";
+import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
 
 const TaskReferral = () => {
+
+    const subscriber = useOutletContext<CombinedSubscriberData>()
+
 
     const [isOpen, setIsOpen] = useState(false)
     const [copiedToClipboard, setCopiedToClipboard] = useState(false)
 
-    const inviteLinkTelegramShare = `https://t.me/share/url?url=${encodeURIComponent("https://t.me/GPTapBot?startapp=999")}&text=${encodeURIComponent("\"Be with me\"")}`
-    const inviteLink = `https://t.me/GPTapBot`
+    const inviteLinkTelegramShare = `https://t.me/share/url?url=${encodeURIComponent(`https://t.me/GPTapBot?startapp=${subscriber.user_id}`)}&text=${encodeURIComponent("Join GPT Tap Bot! It's awesome!")}`
+    const inviteLink = `https://t.me/GPTapBot?startapp=${subscriber.user_id}`
 
     const copyInviteLink = () => {
         navigator.clipboard.writeText(inviteLink)
