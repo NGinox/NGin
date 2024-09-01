@@ -3,7 +3,7 @@ import React from "react";
 interface ButtonProps {
     isEnabled?: boolean;
     isPending?: boolean;
-    text?: string;
+    text: string;
     onClick?: () => void;
     style?: string;
 }
@@ -11,7 +11,7 @@ const Button: React.FC<ButtonProps> = (
     {
         isEnabled = true,
         isPending = false,
-        text= "",
+        text,
         onClick,
         style = "",
     }) => {

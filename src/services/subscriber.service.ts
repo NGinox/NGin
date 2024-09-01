@@ -149,6 +149,30 @@ class SubscriberService {
             }
         ).then(res => res.data)
     }
+
+    async addReferral(subscriberId: number, referralId: number) {
+        return axios.post(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/add-referral`,
+            {
+                telegramId: subscriberId,
+                referralId: referralId
+            }
+        )
+    }
+
+    async getReferralReward(subscriberId: number, tokens: number) {
+        await axiosInstance.post(this.BASE_URL + "/update-tokens", {
+            user_id: subscriberId,
+            tokens: tokens
+        }).then(() => {
+            axios.post(
+                import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/get-referral-reward`,
+                {
+                    telegramId: subscriberId,
+                }
+            )
+        })
+    }
 }
 
 export default new SubscriberService()
