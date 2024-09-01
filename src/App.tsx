@@ -12,20 +12,24 @@ import MinedTokensSheet from "./components/sheets/MinedTokensSheet.tsx";
 import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
-import {initializeWebsocket} from "./services/websocket.service.ts";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
+import {io} from "socket.io-client";
 const App = () => {
 
     // --- Get subscriber data on launch ---
 
     const {subscriber, isLoading, isError} = useSubscriberData()
+    const socket = io(import.meta.env.VITE_REACT_CLICKER_API_URL)
+
 
     // --- Get tokens and energy, then save in local state ---
 
     useEffect(() => {
         if (subscriber) {
 
-            initializeWebsocket(subscriber)
+            socket.on('connect', () => {
+                socket.emit('register', {subscriberId: subscriber.user_id});
+            });
 
             const maxEnergy = subscriber.currentMaxEnergyLevel.maxEnergy
             const getEnergy = (subscriber: CombinedSubscriberData, maxEnergy: number): number => {
@@ -41,6 +45,7 @@ const App = () => {
             const interval = setInterval(() => {
                 if (useAppStore.getState().energy < maxEnergy) {
                     useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
+                    socket.emit('syncEnergy', {energy: useAppStore.getState().energy})
                 }
             }, DELAY_OF_INCREASING_OF_ENERGY);
 
@@ -70,6 +75,8 @@ const App = () => {
 
     );
 };
+
+export const socket = io(import.meta.env.VITE_REACT_CLICKER_API_URL)
 
 
 export default App;
