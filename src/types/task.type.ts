@@ -5,7 +5,9 @@ export interface Task {
     reward: number;
     type: TaskType;
     link: string;
+    imageBase64: string;
     completed: boolean;
+
 }
 
 export enum TaskType {
