@@ -31,7 +31,7 @@ const Boost = () => {
 
     if (isPending) {
         return (
-            <div className="grid grid-cols-3 gap-4 mt-6">
+            <div className="grid grid-cols-3 gap-1 mt-6">
                 <BoostBoxSkeleton/>
                 <BoostBoxSkeleton/>
                 <BoostBoxSkeleton/>
@@ -40,7 +40,7 @@ const Boost = () => {
     }
 
     return (
-        <div className="grid grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-3 gap-1 mt-6">
             <FullEnergyBoost
                 boosts={subscriber.boosts}
                 subscriber={subscriber}
