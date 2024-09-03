@@ -35,7 +35,7 @@ const InfiniteEnergyBoost: React.FC<BoostItem> = ({boosts, subscriber}) => {
     return (
         <BoostBox
             emoji={'⏳'}
-            title={"Inifinite energy 10s"}
+            title={"Inifinite energy"}
             count={boosts.infiniteEnergyBoost}
             onClick={handleOnClick}
             isPending={isPending}
