@@ -40,7 +40,7 @@ const Boost = () => {
     }
 
     return (
-        <div className="grid grid-cols-3 gap-1 mt-6">
+        <div className="grid grid-cols-3 gap-2 mt-6">
             <FullEnergyBoost
                 boosts={subscriber.boosts}
                 subscriber={subscriber}

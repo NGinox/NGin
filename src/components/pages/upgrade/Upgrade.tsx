@@ -22,7 +22,7 @@ const Upgrade = () => {
                     <span className="text-xs">Here you can upgrade the power of your finger!</span>
                 </div>
                 <Boost/>
-                <div className="space-y-4 mt-6 pb-4">
+                <div className="space-y-4 mt-4 pb-4">
                     <UpgradeTapLevel
                         upgradeInfo={subscriber.currentLevel}
                         subscriberId={subscriber.user_id}/>
