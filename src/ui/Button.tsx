@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = (
         style = "",
     }) => {
 
-    const buttonStyle = `self-start gap-1 p-2 rounded-xl bg-[#E23969] pl-4 pr-4 ml-auto whitespace-nowrap block w-full ${style.includes('max-w-full') ? 'max-w-full' : 'max-w-min'} ` + style
+    const buttonStyle = `self-start gap-1 ${style.includes('p-') ? '' : 'p-2'} rounded-xl bg-[#E23969] pl-4 pr-4 ml-auto whitespace-nowrap block w-full ${style.includes('max-w-full') ? 'max-w-full' : 'max-w-min'} ` + style
 
     if (!isEnabled) {
         return (
@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = (
 
     if (isPending) {
         return (
-            <span className={`p-2 rounded-xl bg-[#3c284a] ml-auto pl-4 pr-4 animate-pulse text-purple-300 whitespace-nowrap w-full ${style.includes('max-w-full') ? 'max-w-full' : 'max-w-min'} ${style}`}>{text}</span>
+            <span className={`${style.includes('p-') ? '' : 'p-2'} rounded-xl bg-[#3c284a] ml-auto pl-4 pr-4 animate-pulse text-purple-300 whitespace-nowrap w-full ${style.includes('max-w-full') ? 'max-w-full' : 'max-w-min'} ${style}`}>{text}</span>
         )
     }
 

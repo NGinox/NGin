@@ -18,11 +18,12 @@ const Clicker = () => {
     const energyToReduce = tokensPerClick
 
 
-    const { energy, decreaseEnergy, tokens, updateTokens } = useAppStore((state) => ({
+    const { energy, decreaseEnergy, tokens, updateTokens, infiniteEnergy } = useAppStore((state) => ({
         energy: state.energy,
         decreaseEnergy: state.decreaseEnergy,
         tokens: state.tokens,
-        updateTokens: state.updateTokens
+        updateTokens: state.updateTokens,
+        infiniteEnergy: state.infiniteEnergy
     }))
 
     const [isPressed, setIsPressed] = useState(false)
@@ -66,7 +67,9 @@ const Clicker = () => {
         }
 
         if (energy > energyToReduce) {
-            decreaseEnergy(energyToReduce)
+            if (!infiniteEnergy) {
+                decreaseEnergy(energyToReduce)
+            }
             updateTokens(tokens + tokensPerClick * touchesCount)
         }
     };

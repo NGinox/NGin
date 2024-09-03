@@ -10,7 +10,7 @@ const useSubscriberData = () => {
     const [subscriberId, setSubscriberId] = useState<number | null >(null);
 
     const { data: subscriber, isLoading, isError, error } = useQuery<CombinedSubscriberData>({
-            queryKey: ['subscriber', subscriberId],
+            queryKey: ['subscriber', {subscriberId: subscriberId}],
             queryFn: () => {
                 if (subscriberId) {
                     return SubscriberService.getSubscriberData(subscriberId);
@@ -38,7 +38,7 @@ const useSubscriberData = () => {
             // For local testing
             console.log(import.meta.env.VITE_REACT_DEFAULT_USER_ID)
             useAppStore.getState().updateUserId(import.meta.env.VITE_REACT_DEFAULT_USER_ID)
-            setSubscriberId(import.meta.env.VITE_REACT_DEFAULT_USER_ID);
+            setSubscriberId(Number(import.meta.env.VITE_REACT_DEFAULT_USER_ID))
         }
     }, []);
 

@@ -4,13 +4,14 @@ import AnimatedLayout from "../../../ui/animation/AnimatedLayout.tsx";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
 import UpgradeAutoBotLevel from "./upgradeItems/UpgradeAutoBotLevel.tsx";
+import Boost from "./Boost.tsx";
 const Upgrade = () => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>();
 
     return (
         <AnimatedLayout>
-            <div className="flex-1 flex flex-col max-h-full">
+            <div className="flex flex-col">
                 <div className="text-3xl pb-4 text-center">
                     <div className="inline-block relative">
                         Upgrade
@@ -20,8 +21,8 @@ const Upgrade = () => {
                 <div className="text-xs text-center font-futuraRegular">
                     <span className="text-xs">Here you can upgrade the power of your finger!</span>
                 </div>
-                <div className="grid grid-cols-1 gap-4 mt-6 pb-4">
-
+                <Boost/>
+                <div className="space-y-4 mt-6 pb-4">
                     <UpgradeTapLevel
                         upgradeInfo={subscriber.currentLevel}
                         subscriberId={subscriber.user_id}/>
@@ -34,13 +35,9 @@ const Upgrade = () => {
                         upgradeInfo={subscriber.currentAutoBotLevel}
                         subscriberId={subscriber.user_id}
                     />
-
                 </div>
-
             </div>
         </AnimatedLayout>
-
-
     );
 };
 

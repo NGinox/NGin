@@ -33,13 +33,10 @@ const UpgradeBox: React.FC<UpgradeBoxProps> = (
                 <div className="ml-auto opacity-60">{currentLevelGrade} Lvl</div>
             </div>
             <div className="flex justify-between items-center gap-8">
-
                 <div>
                     {nextLevel && <div className="text-sm opacity-50"> Next Level: {nextLevel.value}</div>}
                     {nextLevel && <div className="text-sm mt-2">{upgradeCost} GPT Tokens</div>}
                 </div>
-
-
 
                 <UpgradeButton
                     nextLevel={nextLevel}
@@ -48,7 +45,6 @@ const UpgradeBox: React.FC<UpgradeBoxProps> = (
                     updateLevel={updateLevel}
 
                 />
-
             </div>
         </div>
     );

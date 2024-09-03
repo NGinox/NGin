@@ -25,10 +25,12 @@ const router = createBrowserRouter([
             },
             {
                 path: "upgrade",
-                element: <Upgrade/>,
-            },
-            {
-                path: "tasks",
+                element: <div>
+                    <Upgrade/>
+                </div>,
+    },
+    {
+        path: "tasks",
                 element: <Tasks/>,
             },
         ],

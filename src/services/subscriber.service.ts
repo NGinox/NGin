@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import axiosInstance from "../api/interceptors.ts";
 import {ClickerSubscriber, CombinedSubscriberData, Subscriber} from "../types/subscriber.type.ts";
 import {Task} from "../types/task.type.ts";
+import {Boosts} from "../types/boost.type.ts";
 class SubscriberService {
 
     private BASE_URL = "/subs"
@@ -172,6 +173,16 @@ class SubscriberService {
                 }
             )
         })
+    }
+
+    async updateSubscriberBoosts(subscriberId: number, boosts: Boosts) {
+        return axios.patch(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/update-boosts`,
+            {
+                telegramId: subscriberId,
+                boosts: boosts
+            }
+        ).then(res => res.data)
     }
 }
 

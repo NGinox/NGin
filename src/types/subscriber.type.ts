@@ -1,5 +1,6 @@
 import {Task} from "./task.type.ts";
 import {Referral} from "./referral.type.ts";
+import {Boosts} from "./boost.type.ts";
 
 export interface Subscriber {
     chat_id: number;
@@ -49,7 +50,8 @@ export interface ClickerSubscriber {
     tasks: Task[],
     myReferral: number,
     referrals: Referral[],
-    newReferrals: Referral[]
+    newReferrals: Referral[],
+    boosts: Boosts
 }
 
 
