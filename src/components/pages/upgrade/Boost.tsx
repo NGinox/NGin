@@ -19,6 +19,7 @@ const Boost = () => {
 
 
     useEffect(() => {
+        setIsPending(true)
         if (isCurrentDayEarlier(subscriber.boosts.dayOfUsingBoost)) {
             updateBoostMutation({subscriberId: subscriber.user_id, boosts: {
                     dayOfUsingBoost: Date.now(),
