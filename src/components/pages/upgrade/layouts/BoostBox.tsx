@@ -22,7 +22,7 @@ const BoostBox: React.FC<BoostBoxProps> = (
     return (
         <div
             className="bg-[#271732] shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] text-white p-2 pt-4 rounded-xl flex flex-col">
-            <div className="flex flex-col items-center gap-2 mb-2">
+            <div className="flex flex-col items-center gap-2 mb-4">
                 <div className="bg-[#E23969] w-[40px] h-[40px] rounded-[10px] grid place-items-center flex-grow">
                     <div className="text-2xl">{emoji}</div>
                 </div>
