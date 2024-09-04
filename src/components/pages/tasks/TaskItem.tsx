@@ -20,6 +20,7 @@ const TaskBox = ({task} : {task: Task}) => {
     const [isOpen, setOpen] = useState(false);
 
     const [completed, setCompleted] = useState(task.completed)
+    const [firstClick, setFirstClick] = useState(true)
     const [isPending, setIsPending] = useState(false)
 
     const queryClient = useQueryClient()
@@ -61,7 +62,11 @@ const TaskBox = ({task} : {task: Task}) => {
             default:
                 return null
         }
+    }
 
+    const goToGroup = () => {
+        window.open(task.link)
+        setFirstClick(false)
     }
 
     const getTelegramChatNameFromLink = (url: string): string => {
@@ -95,9 +100,9 @@ const TaskBox = ({task} : {task: Task}) => {
                     <div className="flex flex-col items-center text-white font-futuraRegular pb-8">
 
                         <div className="text-3xl">{task.title}</div>
-                        <Link to={task.link} className="flex items-center flex-col">
+                        <Link to={task.link} className="flex items-center flex-col" onClick={() => setFirstClick(false)}>
                             <img
-                                className="w-[80px] h-[80px] grid place-items-center mt-4 rounded-full -p-20 border-2 border-[#f3c45a]"
+                                className="w-[80px] h-[80px] grid place-items-center mt-4 rounded-full p-[2px] animatedBackground bg"
                                 src={task.iconUrl} alt=""/>
 
                             <div className="text-xl mt-2 flex items-center gap-2 relative">
@@ -114,9 +119,9 @@ const TaskBox = ({task} : {task: Task}) => {
                         </div>
 
                         <Button
-                            text={"Check"}
+                            text={firstClick ? "Subscribe" : "Check"}
                             style={"text-2xl self-center ml-0 mt-8 max-w-full text-center"}
-                            onClick={() => checkCompleted()}
+                            onClick={() => firstClick ? goToGroup() : checkCompleted()}
                             isPending={isPending}
                         />
                     </div>
