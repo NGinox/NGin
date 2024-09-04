@@ -13,13 +13,14 @@ import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
-import {io} from "socket.io-client";
+import {socket} from "./components/websocket.ts";
+
+
 const App = () => {
 
     // --- Get subscriber data on launch ---
 
     const {subscriber, isLoading, isError} = useSubscriberData()
-    const socket = io(import.meta.env.VITE_REACT_CLICKER_API_URL)
 
 
     // --- Get tokens and energy, then save in local state ---
@@ -78,8 +79,6 @@ const App = () => {
 
     );
 };
-
-export const socket = io(import.meta.env.VITE_REACT_CLICKER_API_URL)
 
 
 export default App;

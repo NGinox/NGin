@@ -5,7 +5,7 @@ import {DELAY_OF_TOKENS_SYNC} from "../../../constants/constants.ts";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
-import {socket} from "../../../App.tsx";
+import {socket} from "../../websocket.ts";
 
 const Clicker = () => {
 
