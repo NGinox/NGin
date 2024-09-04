@@ -11,7 +11,6 @@ import Button from "../../../ui/Button.tsx";
 import BottomSheet from "../../../ui/BottomSheet.tsx";
 import telegramIcon from '../../../images/telegram-icon.svg'
 import axios from "axios";
-
 const TaskBox = ({task} : {task: Task}) => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>()
@@ -50,19 +49,14 @@ const TaskBox = ({task} : {task: Task}) => {
             })
 
             const chatProfileImageId = getChatResponse.data.result.photo.small_file_id
-            const getFilePathResponse = await axios.get('' +
+            const getFilePathResponse = await axios.get(
                 `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getFile?file_id=${chatProfileImageId}`)
 
-            const getFileFromPath = await axios.get(
-                `https://api.telegram.org/file/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/${getFilePathResponse.data.result.file_path}`, { responseType: 'blob' })
-
-            const blob = getFileFromPath.data;
-            const imageUrl = URL.createObjectURL(blob);
-            setGroupProfileImage(imageUrl);
+            SubscriberService.downloadTelegramGroupProfileImage(getFilePathResponse.data.result.file_path, getTelegramChatNameFromLink(task.link))
+                .then(() => setGroupProfileImage(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/images/${getTelegramChatNameFromLink(task.link)}.jpg`))
         } catch(e) {
             console.log(e)
         }
-
     }
 
     const checkCompleted = () => {

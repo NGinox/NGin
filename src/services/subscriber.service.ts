@@ -184,6 +184,22 @@ class SubscriberService {
             }
         ).then(res => res.data)
     }
+
+    async downloadTelegramGroupProfileImage(telegramImagePath: string, telegramGroupName: string) {
+        return axios.post(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/image`,
+            {
+                telegramImagePath,
+                telegramGroupName
+            }
+        ).then(res => res.data)
+    }
+
+    async getTelegramGroupProfileImage(telegramGroupName: string) {
+        return axios.get(
+            import.meta.env.VITE_REACT_CLICKER_API_URL + `/images/${telegramGroupName}.jpg`,
+        ).then(res => res.data)
+    }
 }
 
 export default new SubscriberService()
