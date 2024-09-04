@@ -42,21 +42,24 @@ const TaskBox = ({task} : {task: Task}) => {
     })
 
     const getImageFromTelegram = async () => {
-        try {
-            const requestGetChat = `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getChat`
-            const getChatResponse = await axios.post(requestGetChat, {
-                chat_id: getTelegramChatNameFromLink(task.link)
+        const requestGetChat = `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getChat`
+        const getChatResponse = await axios.post(requestGetChat, {
+            chat_id: getTelegramChatNameFromLink(task.link)
+        })
+
+        const chatProfileImageId = getChatResponse.data.result.photo.small_file_id
+        const getFilePathResponse = await axios.get(
+            `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getFile?file_id=${chatProfileImageId}`)
+
+        SubscriberService
+            .downloadTelegramGroupProfileImage(getFilePathResponse.data.result.file_path, getTelegramChatNameFromLink(task.link))
+            .then(() => {
+                axios.get(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/image/${getTelegramChatNameFromLink(task.link)}.jpg`).then(
+                    async res => {
+                        setGroupProfileImage(res.data.data);
+                    }
+                )
             })
-
-            const chatProfileImageId = getChatResponse.data.result.photo.small_file_id
-            const getFilePathResponse = await axios.get(
-                `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getFile?file_id=${chatProfileImageId}`)
-
-            SubscriberService.downloadTelegramGroupProfileImage(getFilePathResponse.data.result.file_path, getTelegramChatNameFromLink(task.link))
-                .then(() => setGroupProfileImage(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/image/${getTelegramChatNameFromLink(task.link)}.jpg`))
-        } catch(e) {
-            console.log(e)
-        }
     }
 
     const checkCompleted = () => {
