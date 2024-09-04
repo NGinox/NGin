@@ -124,9 +124,9 @@ const TaskBox = ({task} : {task: Task}) => {
                             <img
                                 className="w-[80px] h-[80px] grid place-items-center mt-4 rounded-full -p-20 border-2 border-[#f3c45a]"
                                 src={groupProfileImage ? groupProfileImage : ''} alt=""/>
-                            <div className="text-xl mt-2 opacity-80 flex items-center gap-2 relative">
+                            <div className="text-xl mt-2 flex items-center gap-2 relative">
                                 <div className="h-[16px] w-[16px] relative top-[2px] underline "><img src={telegramIcon} alt=""/></div>
-                                <div className="">{removeProtocol(task.link)}</div>
+                                <div className="opacity-80">{removeProtocol(task.link)}</div>
                             </div>
 
                         </Link>
