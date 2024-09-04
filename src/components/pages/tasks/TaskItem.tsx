@@ -23,7 +23,7 @@ const TaskBox = ({task} : {task: Task}) => {
     const [completed, setCompleted] = useState(task.completed)
     const [isPending, setIsPending] = useState(false)
 
-    //const [groupProfileImage, setGroupProfileImage] = useState('')
+    const [groupProfileImage, setGroupProfileImage] = useState('')
 
     const queryClient = useQueryClient()
     const completeTaskMutation = useMutation({
@@ -53,7 +53,7 @@ const TaskBox = ({task} : {task: Task}) => {
                 `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getFile?file_id=${chatProfileImageId}`)
 
             SubscriberService.downloadTelegramGroupProfileImage(getFilePathResponse.data.result.file_path, getTelegramChatNameFromLink(task.link))
-                .then(() => axios.get(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/image/${getTelegramChatNameFromLink(task.link)}.jpg`))
+                .then(() => setGroupProfileImage(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/image/${getTelegramChatNameFromLink(task.link)}.jpg`))
         } catch(e) {
             console.log(e)
         }
@@ -121,14 +121,13 @@ const TaskBox = ({task} : {task: Task}) => {
 
                         <div className="text-3xl">{task.title}</div>
                         <Link to={task.link} className="flex items-center flex-col">
-                            <div className="w-[60px] h-[60px] bg-[#E23969] p-2  mt-4 rounded-xl">
-                                <img
-                                    className=""
-                                    src={tgIcon} alt=""/>
-                            </div>
+                            <img
+                                className="w-[80px] h-[80px] grid place-items-center mt-4 rounded-full -p-20 border-2 border-[#f3c45a]"
+                                src={groupProfileImage ? groupProfileImage : ''} alt=""/>
 
                             <div className="text-xl mt-2 flex items-center gap-2 relative">
-                                <div className="h-[16px] w-[16px] relative top-[2px] underline "><img src={telegramIcon} alt=""/></div>
+                                <div className="h-[16px] w-[16px] relative top-[2px] underline "><img src={telegramIcon}
+                                                                                                      alt=""/></div>
                                 <div className="opacity-80">{removeProtocol(task.link)}</div>
                             </div>
 
@@ -136,7 +135,7 @@ const TaskBox = ({task} : {task: Task}) => {
 
 
                         <div className="mt-4">
-                        {task.description}
+                            {task.description}
                         </div>
 
                         <Button
