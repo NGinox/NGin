@@ -2,7 +2,7 @@ import {Task, TaskType} from "../../../types/task.type.ts";
 import {Link, useOutletContext} from "react-router-dom";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import SubscriberService from "../../../services/subscriber.service.ts";
 import toast from "react-hot-toast";
@@ -38,6 +38,12 @@ const TaskBox = ({task} : {task: Task}) => {
 
         },
     })
+
+    useEffect(() => {
+        if (!isOpen) {
+            setFirstClick(true)
+        }
+    }, [isOpen]);
 
     const checkCompleted = () => {
         setIsPending(true)
