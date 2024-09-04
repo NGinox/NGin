@@ -2,7 +2,7 @@ import {Task, TaskType} from "../../../types/task.type.ts";
 import {Link, useOutletContext} from "react-router-dom";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
-import { useState} from "react";
+import {useEffect, useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import SubscriberService from "../../../services/subscriber.service.ts";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ import tgIcon from '../../../assets/tg-icon.webp'
 import Button from "../../../ui/Button.tsx";
 import BottomSheet from "../../../ui/BottomSheet.tsx";
 import telegramIcon from '../../../images/telegram-icon.svg'
+import axios from "axios";
 const TaskBox = ({task} : {task: Task}) => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>()
@@ -40,7 +41,7 @@ const TaskBox = ({task} : {task: Task}) => {
         },
     })
 
-    /*const getImageFromTelegram = async () => {
+    const getImageFromTelegram = async () => {
         try {
             const requestGetChat = `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getChat`
             const getChatResponse = await axios.post(requestGetChat, {
@@ -51,12 +52,12 @@ const TaskBox = ({task} : {task: Task}) => {
             const getFilePathResponse = await axios.get(
                 `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getFile?file_id=${chatProfileImageId}`)
 
-            /!*SubscriberService.downloadTelegramGroupProfileImage(getFilePathResponse.data.result.file_path, getTelegramChatNameFromLink(task.link))
-                .then(() => /!*setGroupProfileImage(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/images/${getTelegramChatNameFromLink(task.link)}.jpg`)*!/)*!/
+            SubscriberService.downloadTelegramGroupProfileImage(getFilePathResponse.data.result.file_path, getTelegramChatNameFromLink(task.link))
+                .then(() => axios.get(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/image/${getTelegramChatNameFromLink(task.link)}.jpg`))
         } catch(e) {
             console.log(e)
         }
-    }*/
+    }
 
     const checkCompleted = () => {
         setIsPending(true)
@@ -94,9 +95,9 @@ const TaskBox = ({task} : {task: Task}) => {
         return url.replace(/^https?:\/\//, '');
     }
 
-    /*useEffect(() => {
+    useEffect(() => {
         getImageFromTelegram()
-    }, []);*/
+    }, []);
 
     return (
         <div
