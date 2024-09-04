@@ -5,7 +5,7 @@ export interface Task {
     reward: number;
     type: TaskType;
     link: string;
-    imageBase64: string;
+    iconUrl: string;
     completed: boolean;
 
 }

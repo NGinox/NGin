@@ -2,7 +2,7 @@ import {Task, TaskType} from "../../../types/task.type.ts";
 import {Link, useOutletContext} from "react-router-dom";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import SubscriberService from "../../../services/subscriber.service.ts";
 import toast from "react-hot-toast";
@@ -10,7 +10,6 @@ import tgIcon from '../../../assets/tg-icon.webp'
 import Button from "../../../ui/Button.tsx";
 import BottomSheet from "../../../ui/BottomSheet.tsx";
 import telegramIcon from '../../../images/telegram-icon.svg'
-import axios from "axios";
 const TaskBox = ({task} : {task: Task}) => {
 
     const subscriber = useOutletContext<CombinedSubscriberData>()
@@ -22,8 +21,6 @@ const TaskBox = ({task} : {task: Task}) => {
 
     const [completed, setCompleted] = useState(task.completed)
     const [isPending, setIsPending] = useState(false)
-
-    const [groupProfileImage, setGroupProfileImage] = useState('')
 
     const queryClient = useQueryClient()
     const completeTaskMutation = useMutation({
@@ -40,27 +37,6 @@ const TaskBox = ({task} : {task: Task}) => {
 
         },
     })
-
-    const getImageFromTelegram = async () => {
-        const requestGetChat = `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getChat`
-        const getChatResponse = await axios.post(requestGetChat, {
-            chat_id: getTelegramChatNameFromLink(task.link)
-        })
-
-        const chatProfileImageId = getChatResponse.data.result.photo.small_file_id
-        const getFilePathResponse = await axios.get(
-            `https://api.telegram.org/bot${import.meta.env.VITE_REACT_TELEGRAM_API}/getFile?file_id=${chatProfileImageId}`)
-
-        SubscriberService
-            .downloadTelegramGroupProfileImage(getFilePathResponse.data.result.file_path, getTelegramChatNameFromLink(task.link))
-            .then(() => {
-                axios.get(`${import.meta.env.VITE_REACT_CLICKER_API_URL}/image/${getTelegramChatNameFromLink(task.link)}.jpg`).then(
-                    async res => {
-                        setGroupProfileImage(res.data.data);
-                    }
-                )
-            })
-    }
 
     const checkCompleted = () => {
         setIsPending(true)
@@ -98,10 +74,6 @@ const TaskBox = ({task} : {task: Task}) => {
         return url.replace(/^https?:\/\//, '');
     }
 
-    useEffect(() => {
-        getImageFromTelegram()
-    }, []);
-
     return (
         <div
             className="bg-[#271732] shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] text-white p-4 rounded-xl flex flex-col gap-2 w-full">
@@ -126,7 +98,7 @@ const TaskBox = ({task} : {task: Task}) => {
                         <Link to={task.link} className="flex items-center flex-col">
                             <img
                                 className="w-[80px] h-[80px] grid place-items-center mt-4 rounded-full -p-20 border-2 border-[#f3c45a]"
-                                src={groupProfileImage ? groupProfileImage : ''} alt=""/>
+                                src={task.iconUrl} alt=""/>
 
                             <div className="text-xl mt-2 flex items-center gap-2 relative">
                                 <div className="h-[16px] w-[16px] relative top-[2px] underline "><img src={telegramIcon}
