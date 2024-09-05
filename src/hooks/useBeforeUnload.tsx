@@ -9,11 +9,7 @@ const useBeforeUnload = (callback: () => void) => {
             // event.returnValue = '';
         };
 
-        window.addEventListener('pagehide', handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener('pagehide', handleBeforeUnload);
-        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
     }, [callback]);
 };
 

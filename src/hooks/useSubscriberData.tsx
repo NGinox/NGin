@@ -4,7 +4,6 @@ import SubscriberService from "../services/subscriber.service.ts";
 import WebApp from "@twa-dev/sdk";
 import useAppStore from "./useAppStore.ts";
 import {CombinedSubscriberData} from "../types/subscriber.type.ts";
-import { EventNames } from '@twa-dev/types';
 
 const useSubscriberData = () => {
     const [subscriberId, setSubscriberId] = useState<number | null >(null);
@@ -29,11 +28,7 @@ const useSubscriberData = () => {
             WebApp.setHeaderColor("#000");
             WebApp.setBackgroundColor("#271732");
             WebApp.disableVerticalSwipes()
-            WebApp.onEvent("web_app_close" as EventNames, () => {
-                if (subscriber) {
-                    SubscriberService.updateSubscriberLastOnline(subscriber.user_id, new Date())
-                }
-            })
+
         } else {
             // For local testing
             console.log(import.meta.env.VITE_REACT_DEFAULT_USER_ID)
