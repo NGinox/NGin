@@ -32,6 +32,7 @@ const useSubscriberData = () => {
             WebApp.setBackgroundColor("#271732");
             WebApp.disableVerticalSwipes()
 
+
         } else {
             // For local testing
             console.log(import.meta.env.VITE_REACT_DEFAULT_USER_ID)
