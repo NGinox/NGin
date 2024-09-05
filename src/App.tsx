@@ -13,7 +13,6 @@ import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
-import {socket} from "./components/websocket.ts";
 
 
 const App = () => {
@@ -22,15 +21,10 @@ const App = () => {
 
     const {subscriber, isLoading, isError} = useSubscriberData()
 
-
     // --- Get tokens and energy, then save in local state ---
 
     useEffect(() => {
         if (subscriber) {
-
-            socket.on('connect', () => {
-                socket.emit('register', {subscriberId: subscriber.user_id});
-            });
 
             const maxEnergy = subscriber.currentMaxEnergyLevel.maxEnergy
             const getEnergy = (subscriber: CombinedSubscriberData, maxEnergy: number): number => {
@@ -46,10 +40,6 @@ const App = () => {
             const interval = setInterval(() => {
                 if (useAppStore.getState().energy < maxEnergy) {
                     useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
-                    socket.emit('sync', {
-                        energy: useAppStore.getState().energy,
-                        tokens: useAppStore.getState().tokens
-                    })
                 }
             }, DELAY_OF_INCREASING_OF_ENERGY);
 

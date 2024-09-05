@@ -5,7 +5,6 @@ import {DELAY_OF_TOKENS_SYNC} from "../../../constants/constants.ts";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
-import {socket} from "../../websocket.ts";
 
 const Clicker = () => {
 
@@ -16,7 +15,6 @@ const Clicker = () => {
 
     // Mirror the variable to pay attention that value of tokens to reduce is equal to energy to reduce
     const energyToReduce = tokensPerClick
-
 
     const { energy, decreaseEnergy, tokens, updateTokens, infiniteEnergy } = useAppStore((state) => ({
         energy: state.energy,
@@ -41,12 +39,6 @@ const Clicker = () => {
                 SubscriberService.syncSubscriberData(subscriber.user_id, Number(tokens.toFixed(1)), energy);
             }
         }, DELAY_OF_TOKENS_SYNC);
-
-        socket.emit('sync', {
-            energy: energy,
-            tokens: tokens
-        })
-
     }, [tokens, subscriber]);
 
     const updateStateOnClick = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
