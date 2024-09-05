@@ -13,13 +13,10 @@ import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
-import useConnectWebsocket from "./hooks/useConnectWebsocket.tsx";
 import Websocket from "./api/websocket.ts";
 
 
 const App = () => {
-
-    useConnectWebsocket()
 
     // --- Get subscriber data on launch ---
 
