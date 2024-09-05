@@ -4,6 +4,7 @@ import SubscriberService from "../services/subscriber.service.ts";
 import WebApp from "@twa-dev/sdk";
 import useAppStore from "./useAppStore.ts";
 import {CombinedSubscriberData} from "../types/subscriber.type.ts";
+import Websocket from "../api/websocket.ts";
 
 const useSubscriberData = () => {
     const [subscriberId, setSubscriberId] = useState<number | null >(null);
@@ -22,6 +23,8 @@ const useSubscriberData = () => {
 
     useEffect(() => {
         if (WebApp.initDataUnsafe.user) {
+            Websocket.createConnection(WebApp.initDataUnsafe.user.id)
+
             setSubscriberId(WebApp.initDataUnsafe.user.id);
             useAppStore.getState().updateUserId(WebApp.initDataUnsafe.user.id)
             WebApp.expand();

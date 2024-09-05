@@ -31,8 +31,6 @@ const App = () => {
 
         if (subscriber) {
 
-            Websocket.sendUserId(subscriber.user_id)
-
             const maxEnergy = subscriber.currentMaxEnergyLevel.maxEnergy
             const getEnergy = (subscriber: CombinedSubscriberData, maxEnergy: number): number => {
                 const differenceInSeconds = Math.floor((Date.now() - new Date(subscriber.savedEnergyTimestamp).getTime()) / 1000)
