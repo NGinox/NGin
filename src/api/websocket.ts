@@ -4,7 +4,9 @@ class Websocket {
     static socket: null | Socket = null
 
     static createConnection() {
-        this.socket = io(import.meta.env.VITE_REACT_CLICKER_API_URL)
+        this.socket = io(import.meta.env.VITE_REACT_CLICKER_API_URL, {
+            transports: [ "websocket" ]
+        })
         this.socket.on("connect", () => {
 
         })
