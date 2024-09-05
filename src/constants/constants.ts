@@ -1,5 +1,5 @@
 export const MAX_ENERGY = 50
-export const DELAY_OF_TOKENS_SYNC = 10000
+export const DELAY_OF_TOKENS_SYNC = 1000
 export const DELAY_OF_INCREASING_OF_ENERGY = 1000
 export const ENERGY_TO_INCREASE = 1
 export const MAX_AUTOBOT_MINING_TIME_HOURS = 3
