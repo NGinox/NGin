@@ -13,9 +13,13 @@ import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
+import useConnectWebsocket from "./hooks/useConnectWebsocket.tsx";
+import Websocket from "./api/websocket.ts";
 
 
 const App = () => {
+
+    useConnectWebsocket()
 
     // --- Get subscriber data on launch ---
 
@@ -26,6 +30,8 @@ const App = () => {
     useEffect(() => {
 
         if (subscriber) {
+
+            Websocket.sendUserId(subscriber.user_id)
 
             const maxEnergy = subscriber.currentMaxEnergyLevel.maxEnergy
             const getEnergy = (subscriber: CombinedSubscriberData, maxEnergy: number): number => {
@@ -42,6 +48,7 @@ const App = () => {
             const interval = setInterval(() => {
                 if (useAppStore.getState().energy < maxEnergy) {
                     useAppStore.getState().increaseEnergy(ENERGY_TO_INCREASE)
+                    Websocket.syncTokensAndEnergy(useAppStore.getState().tokens, useAppStore.getState().energy)
                 }
             }, DELAY_OF_INCREASING_OF_ENERGY);
 

@@ -5,6 +5,7 @@ import {DELAY_OF_TOKENS_SYNC} from "../../../constants/constants.ts";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
+import Websocket from "../../../api/websocket.ts";
 
 const Clicker = () => {
 
@@ -63,6 +64,7 @@ const Clicker = () => {
                 decreaseEnergy(energyToReduce)
             }
             updateTokens(tokens + tokensPerClick * touchesCount)
+            Websocket.syncTokensAndEnergy(useAppStore.getState().tokens, useAppStore.getState().energy)
         }
     };
 
