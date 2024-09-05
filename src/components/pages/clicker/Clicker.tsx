@@ -1,7 +1,5 @@
 import ClickerLayout from "./ClickerLayout.tsx";
-import React, {useEffect, useRef, useState} from "react";
-import SubscriberService from "../../../services/subscriber.service.ts";
-import {DELAY_OF_TOKENS_SYNC} from "../../../constants/constants.ts";
+import React, {useState} from "react";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
@@ -27,21 +25,6 @@ const Clicker = () => {
 
     const [isPressed, setIsPressed] = useState(false)
 
-    const timerRef = useRef<number | null>(null);
-
-    // To prevent server overload the request will be sent when user is not clicking for DELAY_OF_TOKENS_SYNC
-    useEffect(() => {
-        if (timerRef.current !== null) {
-            clearTimeout(timerRef.current);
-        }
-
-        timerRef.current = window.setTimeout(() => {
-            if (subscriber) {
-                SubscriberService.syncSubscriberData(subscriber.user_id, Number(tokens.toFixed(1)), energy);
-            }
-        }, DELAY_OF_TOKENS_SYNC);
-    }, [tokens, subscriber]);
-
     const updateStateOnClick = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
         if (energyToReduce - energyToReduce < 0) {
             return;
@@ -64,6 +47,7 @@ const Clicker = () => {
                 decreaseEnergy(energyToReduce)
             }
             updateTokens(tokens + tokensPerClick * touchesCount)
+
             Websocket.syncTokensAndEnergy(useAppStore.getState().tokens, useAppStore.getState().energy)
         }
     };
