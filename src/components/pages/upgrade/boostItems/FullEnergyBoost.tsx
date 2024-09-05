@@ -4,6 +4,7 @@ import {BoostItem} from "../Boost.tsx";
 import useUpdateBoostsMutation from "../../../../hooks/mutations/useUpdateBoostsMutation.tsx";
 import useAppStore from "../../../../hooks/useAppStore.ts";
 import toast from "react-hot-toast";
+import Websocket from "../../../../api/websocket.ts";
 
 const FullEnergyBoost: React.FC<BoostItem> = ({ boosts, subscriber}) => {
 
@@ -26,6 +27,7 @@ const FullEnergyBoost: React.FC<BoostItem> = ({ boosts, subscriber}) => {
     const onSuccessBoostRemove = () => {
         setIsPending(false)
         useAppStore.getState().updateEnergy(subscriber.currentMaxEnergyLevel.maxEnergy)
+        Websocket.syncTokensAndEnergy(useAppStore.getState().tokens, useAppStore.getState().energy)
         toast.success('Energy is full!')
     }
 
