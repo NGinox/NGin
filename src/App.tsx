@@ -13,8 +13,6 @@ import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
-import useBeforeUnload from "./hooks/useBeforeUnload.tsx";
-import SubscriberService from "./services/subscriber.service.ts";
 
 
 const App = () => {
@@ -52,10 +50,6 @@ const App = () => {
             }
         }
     }, [subscriber]);
-
-    useBeforeUnload(() => {
-        SubscriberService.syncSubscriberData(useAppStore.getState().userId, useAppStore.getState().tokens, useAppStore.getState().tokens)
-    })
 
     if (isLoading) return <Loader/>
 
