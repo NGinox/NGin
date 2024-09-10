@@ -38,7 +38,7 @@ const StoreItem: React.FC<StoreItemProps> = ({gptTokens, description, price, wit
 
     return (
         <div
-            className="bg-[#271732] shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] text-white p-2 rounded-xl flex flex-col items-center justify-center gap-2 h-full"
+            className="bg-[#271732] shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] text-white p-2 rounded-xl flex flex-col items-center justify-center gap-2"
         >
             <div className="mt-2 text-4xl">🤖</div>
             <div>{gptTokens} GPT Tokens</div>

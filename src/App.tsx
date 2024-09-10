@@ -14,7 +14,6 @@ import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
 import Websocket from "./api/websocket.ts";
-import WebApp from "@twa-dev/sdk";
 
 
 const App = () => {
@@ -48,10 +47,6 @@ const App = () => {
                 }
             }, DELAY_OF_INCREASING_OF_ENERGY);
 
-            // case when user hide app without closing, as all sync happens on app close
-            WebApp.onEvent('viewportChanged', () => {
-                Websocket.syncTokensAndEnergy(useAppStore.getState().tokens, useAppStore.getState().energy)
-            })
 
             return () => {
                 clearInterval(interval);
