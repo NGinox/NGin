@@ -1,13 +1,20 @@
 import axios, {AxiosResponse} from "axios";
 import axiosInstance from "../api/interceptors.ts";
 import {ClickerSubscriber, CombinedSubscriberData, Subscriber} from "../types/subscriber.type.ts";
-import {Task} from "../types/task.type.ts";
 import {Boosts} from "../types/boost.type.ts";
+import useAppStore from "../hooks/useAppStore.ts";
 class SubscriberService {
 
     private BASE_URL = "/subs"
 
     async getSubscriberData(subscriberId: number): Promise<CombinedSubscriberData> {
+
+        // As any user interaction is updating tokens in app context and only at application exit they will send to server,
+        // at user update from server I will check if user tokens in app context are present, in any words if it's a user update and not initial load
+        // I will set current tokens from app context
+
+        const currentAppTokens = useAppStore.getState().tokens
+
         try {
             // First API call to get subscriber data
             const response: AxiosResponse<Subscriber> = await axiosInstance.post(this.BASE_URL + "/one", {
@@ -26,6 +33,7 @@ class SubscriberService {
             // Combine the responses into one object
             return <CombinedSubscriberData> {
                 ...subscriber,
+                tokens: currentAppTokens > 0 ? currentAppTokens : subscriber.tokens,
                 ...additionalData
             };
 
@@ -49,12 +57,6 @@ class SubscriberService {
     async getAutoBotLevels() {
         return axios.get(
             import.meta.env.VITE_REACT_CLICKER_API_URL + `/auto-bot-level`,
-        ).then(res => res.data)
-    }
-
-    async getTasks(): Promise<Task[]> {
-        return axios.get(
-            import.meta.env.VITE_REACT_CLICKER_API_URL + `/task`
         ).then(res => res.data)
     }
 
@@ -114,16 +116,6 @@ class SubscriberService {
                     telegramId: subscriberId
                 }
             )
-        )
-    }
-
-    async updateSubscriberLastOnline(subscriberId: number, lastOnline: Date) {
-        return axios.patch(
-            import.meta.env.VITE_REACT_CLICKER_API_URL + `/user/update-last-online`,
-            {
-                telegramId: subscriberId,
-                lastOnline: lastOnline
-            }
         )
     }
 
