@@ -1,9 +1,11 @@
 import ClickerLayout from "./ClickerLayout.tsx";
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import useAppStore from "../../../hooks/useAppStore.ts";
 import {useOutletContext} from "react-router-dom";
 import {CombinedSubscriberData} from "../../../types/subscriber.type.ts";
 import Websocket from "../../../api/websocket.ts";
+import SubscriberService from "../../../services/subscriber.service.ts";
+import {DELAY_OF_TOKENS_SYNC} from "../../../constants/constants.ts";
 
 const Clicker = () => {
 
@@ -51,6 +53,21 @@ const Clicker = () => {
             Websocket.syncTokensAndEnergy(useAppStore.getState().tokens, useAppStore.getState().energy)
         }
     };
+
+    const timerRef = useRef<number | null>(null);
+
+    // To prevent server overload the request will be sent when user is not clicking for DELAY_OF_TOKENS_SYNC
+    useEffect(() => {
+        if (timerRef.current !== null) {
+            clearTimeout(timerRef.current);
+        }
+
+        timerRef.current = window.setTimeout(() => {
+            if (subscriber) {
+                SubscriberService.updateSubscriberTokens(subscriber.user_id, tokens);
+            }
+        }, DELAY_OF_TOKENS_SYNC);
+    }, [tokens, subscriber]);
 
     return (
         <ClickerLayout

@@ -2,19 +2,11 @@ import axios, {AxiosResponse} from "axios";
 import axiosInstance from "../api/interceptors.ts";
 import {ClickerSubscriber, CombinedSubscriberData, Subscriber} from "../types/subscriber.type.ts";
 import {Boosts} from "../types/boost.type.ts";
-import useAppStore from "../hooks/useAppStore.ts";
 class SubscriberService {
 
     private BASE_URL = "/subs"
 
     async getSubscriberData(subscriberId: number): Promise<CombinedSubscriberData> {
-
-        // As any user interaction is updating tokens in app context and only at application exit they will send to server,
-        // at user update from server I will check if user tokens in app context are present, in any words if it's a user update and not initial load
-        // I will set current tokens from app context
-
-        const currentAppTokens = useAppStore.getState().tokens
-
         try {
             // First API call to get subscriber data
             const response: AxiosResponse<Subscriber> = await axiosInstance.post(this.BASE_URL + "/one", {
@@ -33,7 +25,6 @@ class SubscriberService {
             // Combine the responses into one object
             return <CombinedSubscriberData> {
                 ...subscriber,
-                tokens: currentAppTokens > 0 ? currentAppTokens : subscriber.tokens,
                 ...additionalData
             };
 

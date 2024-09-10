@@ -13,7 +13,6 @@ import Loader from "./ui/Loader.tsx";
 import StyledToaster from "./ui/StyledToaster.tsx";
 import ErrorLayout from "./ui/ErrorLayout.tsx";
 import ReferralHandler from "./hooks/ReferralHandler.tsx";
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import Websocket from "./api/websocket.ts";
 
 
@@ -71,9 +70,7 @@ const App = () => {
             </div>
             <MinedTokensSheet subscriber={subscriber}/>
             <ReferralHandler subscriber={subscriber}/>
-            <SpeedInsights/>
         </div>
-
     );
 };
 

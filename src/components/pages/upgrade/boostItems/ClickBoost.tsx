@@ -5,7 +5,6 @@ import useUpdateBoostsMutation from "../../../../hooks/mutations/useUpdateBoosts
 import toast from "react-hot-toast";
 import {useQueryClient} from "@tanstack/react-query";
 import {CombinedSubscriberData} from "../../../../types/subscriber.type.ts";
-import useAppStore from "../../../../hooks/useAppStore.ts";
 
 const ClickBoost: React.FC<BoostItem> = ({boosts, subscriber}) => {
 
@@ -22,7 +21,6 @@ const ClickBoost: React.FC<BoostItem> = ({boosts, subscriber}) => {
                 if (oldSubscriber) {
                     return {
                         ...oldSubscriber,
-                        tokens: useAppStore.getState().tokens,
                         currentLevel: {
                             ...oldSubscriber.currentLevel,
                             tokensPerClick: oldSubscriber.currentLevel.tokensPerClick / 2
