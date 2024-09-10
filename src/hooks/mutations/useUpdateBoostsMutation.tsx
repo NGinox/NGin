@@ -2,6 +2,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import SubscriberService from "../../services/subscriber.service.ts";
 import {Boosts} from "../../types/boost.type.ts";
 import {CombinedSubscriberData} from "../../types/subscriber.type.ts";
+import useAppStore from "../useAppStore.ts";
 
 const useUpdateBoostsMutation = (
     subscriberId: number,
@@ -23,6 +24,7 @@ const useUpdateBoostsMutation = (
                             return {
                                 ...oldSubscriber,
                                 boosts: data,
+                                tokens: useAppStore.getState().tokens,
                                 currentLevel: {
                                     ...oldSubscriber.currentLevel,
                                     tokensPerClick: oldSubscriber.currentLevel.tokensPerClick * 2
@@ -31,6 +33,7 @@ const useUpdateBoostsMutation = (
                         }
                         return {
                             ...oldSubscriber,
+                            tokens: useAppStore.getState().tokens,
                             boosts: data,
                         }
                     }
